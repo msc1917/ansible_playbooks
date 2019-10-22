@@ -1,0 +1,143 @@
+---
+network:
+  domain: baikonur.at
+  wins: BAIKONUR
+  gateway: 192.168.96.1
+  ntp:
+    - 192.168.96.1
+  nameserver:
+    - 192.168.96.1
+
+vlan:
+  default:    { vlan: "1", ip_range: "192.168.96.1/22" }
+  ServeNET:   { vlan: "2", ip_range: "172.16.0.1/16" }
+  VirtualNET: { vlan: "3", ip_range: "172.31.0.1/16" }
+
+storage:
+  eremitage: { address: "192.168.96.20", username: "sys-techaccount", password: password['eremitage']['sysaccount'].password }
+  pushkin:   { address: "192.168.96.24", username: "sys-techaccount", password: password['pushkin']['sysaccount'].password }
+  potemkin:  { address: "192.168.96.25", username: "systech", password: password['potemkin']['sysaccount'].password }
+
+admin_groups:
+  - sudo-nopwd
+  
+admin_users:
+  - { name: 'schama',
+      full_name: Martin Schatz',
+      password: password['osuser']['schama'].password,
+      uid: '1200',
+      shell: '/bin/bash' }
+
+mount_filesystems:
+  - { mountpoint: '/media/storage/eremitage/datastore', 
+      remote: "//{{ storage['eremitage'].address }}/datastore", 
+      type: 'cifs', 
+      options: "username={{ storage['eremitage'].username }},password={{ storage['eremitage'].password }}" }
+  - { mountpoint: '/media/storage/eremitage/system', 
+      remote: "{{ storage['eremitage'].address }}:/volume1/sys-services", 
+      type: 'nfs', 
+      options: "rw" }
+  - { mountpoint: '/media/storage/eremitage/publish', 
+      remote: "//{{ storage['eremitage'].address }}/publish", 
+      type: 'cifs', 
+      options: "username={{ storage['eremitage'].username }},password={{ storage['eremitage'].password }}" }
+  - { mountpoint: '/media/storage/eremitage/documents', 
+      remote: "//{{ storage['eremitage'].address }}/documents", 
+      type: 'cifs', 
+      options: "username={{ storage['eremitage'].username }},password={{ storage['eremitage'].password }}" }
+  - { mountpoint: '/media/storage/eremitage/photo', 
+      remote: "//{{ storage['eremitage'].address }}/Fotografie", 
+      type: 'cifs', 
+      options: "username={{ storage['eremitage'].username }},password={{ storage['eremitage'].password }}" }
+  - { mountpoint: '/media/storage/pushkin', 
+      remote: "//{{ storage['pushkin'].address }}/media", 
+      type: 'cifs', 
+      options: "username={{ storage['pushkin'].username }},password={{ storage['pushkin'].password }}" }
+  - { mountpoint: '/media/storage/potemkin', 
+      remote: "//{{ storage['potemkin'].address }}/mediadata", 
+      type: 'cifs', 
+      options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" }
+  - { mountpoint: '/media/storage/potemkin', 
+      remote: "//{{ storage['potemkin'].address }}/mediadata", 
+      type: 'cifs', 
+      options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" 
+}
+dhcp_config:
+  - { mac_address: 'b8:27:eb:77:35:b0', ip_address: '192.168.96.5',   hostname: 'jumphost' }
+  - { mac_address: 'b8:27:eb:85:11:97', ip_address: '192.168.96.2',   hostname: 'docker01' }
+  - { mac_address: 'b8:27:eb:c7:a6:73', ip_address: '192.168.96.8',   hostname: 'docker02' }
+  - { mac_address: 'b8:27:eb:e4:90:58', ip_address: '192.168.96.8',   hostname: 'docker03' }
+  - { mac_address: 'b8:27:eb:4e:8f:f4', ip_address: '192.168.96.3',   hostname: 'docker04' }
+  - { mac_address: 'b8:27:eb:1e:68:a1', ip_address: '192.168.96.204', hostname: 'docker05' }
+  - { mac_address: 'b8:27:eb:23:fd:24', ip_address: '192.168.96.8',   hostname: 'docker06' }
+  - { mac_address: 'b8:27:eb:b1:c5:0d', ip_address: '192.168.97.8',   hostname: 'docker01.wlan' }
+  - { mac_address: 'b8:27:eb:92:f3:26', ip_address: '192.168.97.8',   hostname: 'docker02.wlan' }
+  - { mac_address: 'b8:27:eb:d0:44:c2', ip_address: '192.168.97.2',   hostname: 'docker03.wlan' }
+  - { mac_address: 'b8:27:eb:1b:da:a1', ip_address: '192.168.97.3',   hostname: 'docker04.wlan' }
+  - { mac_address: 'b8:27:eb:4b:3d:f4', ip_address: '192.168.97.204', hostname: 'docker05.wlan' }
+  - { mac_address: 'b8:27:eb:76:a8:71', ip_address: '192.168.97.204', hostname: 'docker06.wlan' }
+  - { mac_address: 'b8:27:eb:d9:c6:1d', ip_address: '192.168.96.200', hostname: 'worker01' }
+  - { mac_address: 'b8:27:eb:47:5f:03', ip_address: '192.168.96.201', hostname: 'worker02' }
+  - { mac_address: 'b8:27:eb:7a:ff:20', ip_address: '192.168.96.202', hostname: 'raspi2-1' }
+  - { mac_address: 'b8:27:eb:1d:92:ab', ip_address: '192.168.96.203', hostname: 'raspi2-2' }
+  - { mac_address: 'b8:27:eb:79:7e:9f', ip_address: '192.168.96.228', hostname: 'display' }
+  - { mac_address: 'b8:27:eb:2c:2b:ca', ip_address: '192.168.97.228', hostname: 'display.wlan' }
+  - { mac_address: 'b8:27:eb:73:cc:a6', ip_address: '192.168.96.229', hostname: 'testing' }
+  - { mac_address: 'b8:27:eb:26:99:f3', ip_address: '192.168.97.229', hostname: 'testing.wlan' }
+  - { mac_address: 'a0:63:91:b8:1b:7a', ip_address: '192.168.96.1',   hostname: 'gateway' }
+  - { mac_address: '2c:30:33:59:da:97', ip_address: '192.168.96.9',   hostname: 'wlan' }
+  - { mac_address: 'a0:63:91:a8:1a:f6', ip_address: '192.168.96.10',  hostname: 'switch00' }
+  - { mac_address: 'b0:7f:b9:39:1b:eb', ip_address: '192.168.96.11',  hostname: 'switch01' }
+  - { mac_address: 'a0:63:91:7e:f3:57', ip_address: '192.168.96.12',  hostname: 'switch02' }
+  - { mac_address: 'a0:63:91:a5:b0:a7', ip_address: '192.168.96.13',  hostname: 'switch03' }
+  - { mac_address: 'b0:7f:b9:36:23:a4', ip_address: '192.168.96.14',  hostname: 'switch04' }
+  - { mac_address: 'bo:7f:b9:36:27:64', ip_address: '192.168.96.15',  hostname: 'switch05' }
+  - { mac_address: '00:1e:2a:43:34:c7', ip_address: '192.168.96.17',  hostname: 'switch07' }
+  - { mac_address: '00:1e:2a:ad:d4:6f', ip_address: '192.168.96.18',  hostname: 'switch08' }
+  - { mac_address: '00:1e:2a:43:35:3f', ip_address: '192.168.96.19',  hostname: 'switch09' }
+  - { mac_address: '00:11:32:40:17:4d', ip_address: '192.168.96.20',  hostname: 'eremitage-eth01' }
+  - { mac_address: '00:11:32:40:17:4e', ip_address: '192.168.96.21',  hostname: 'eremitage-eth02' }
+  - { mac_address: '00:11:32:40:17:4f', ip_address: '192.168.96.22',  hostname: 'eremitage-eth03' }
+  - { mac_address: '00:11:32:40:17:50', ip_address: '192.168.96.23',  hostname: 'eremitage-eth04' }
+  - { mac_address: '00:90:a9:db:20:e1', ip_address: '192.168.96.24',  hostname: 'pushkin' }
+  - { mac_address: '00:90:a9:bd:e5:4c', ip_address: '192.168.96.25',  hostname: 'potemkin' }
+  - { mac_address: '00:14:38:49:c9:bf', ip_address: '192.168.96.30',  hostname: 'laserjet' }
+  - { mac_address: '00:16:6c:91:db:cc', ip_address: '192.168.97.34',  hostname: 'cam01.wlan' }
+  - { mac_address: '00:17:88:17:f6:4d', ip_address: '192.168.96.39',  hostname: 'light' }
+  - { mac_address: '00:12:fb:ba:59:30', ip_address: '192.168.96.40',  hostname: 'samsungtv' }
+  - { mac_address: 'a8:13:74:36:cc:ec', ip_address: '192.168.96.41',  hostname: 'panasonictv' }
+  - { mac_address: 'b8:27:eb:b4:df:3c', ip_address: '192.168.96.45',  hostname: 'retropie' }
+  - { mac_address: '00:13:ef:10:0c:fa', ip_address: '192.168.97.45',  hostname: 'retropie.wlan' }
+  - { mac_address: '00:01:db:08:96:c0', ip_address: '192.168.97.56',  hostname: 'freecom.wlan' }
+  - { mac_address: 'd0:e7:82:f0:98:37', ip_address: '192.168.97.60',  hostname: 'chromecast01.wlan' }
+  - { mac_address: '6c:ad:f8:6f:53:e8', ip_address: '192.168.97.61',  hostname: 'chromecast02.wlan' }
+  - { mac_address: 'f0:27:2d:f9:e3:ac', ip_address: '192.168.96.65',  hostname: 'amazonfire01' }
+  - { mac_address: '74:75:48:51:fd:d5', ip_address: '192.168.97.65',  hostname: 'amazonfire01.wlan' }
+  - { mac_address: '74:c2:46:ac:80:1f', ip_address: '192.168.97.66',  hostname: 'amazonfire02.wlan' }
+  - { mac_address: '00:1d:60:d5:ea:97', ip_address: '192.168.96.80',  hostname: 'prawda-eth01' }
+  - { mac_address: '00:00:21:c5:b7:a9', ip_address: '192.168.96.81',  hostname: 'prawda-eth02' }
+  - { mac_address: 'f0:a2:25:7b:1d:ac', ip_address: '192.168.96.82',  hostname: 'istwestija-eth01' }
+  - { mac_address: 'e0:cb:4e:e5:d0:ac', ip_address: '192.168.96.160', hostname: 'bejing' }
+  - { mac_address: '18:67:b0:2e:1a:2c', ip_address: '192.168.96.170', hostname: 'sojus' }
+  - { mac_address: 'c8:f7:33:ef:f7:db', ip_address: '192.168.97.170', hostname: 'sojus.wlan' }
+  - { mac_address: '7c:7a:91:97:38:7b', ip_address: '192.168.97.172', hostname: 'dienstnotebook.itsv.wlan' }
+  - { mac_address: 'dc:85:de:f3:37:ef', ip_address: '192.168.97.173', hostname: 'kosmos.wlan' }
+  - { mac_address: '10:68:3f:81:4b:3e', ip_address: '192.168.97.181', hostname: 'nexus4.wlan' }
+  - { mac_address: '38:f2:3e:f4:c7:20', ip_address: '192.168.97.183', hostname: 'diensthandy.wlan' }
+  - { mac_address: '98:4b:4a:ee:90:f8', ip_address: '192.168.97.185', hostname: 'xoom.wlan' }
+  - { mac_address: 'ac:22:0b:5c:e7:cb', ip_address: '192.168.97.186', hostname: 'nexus7.wlan' }
+  - { mac_address: 'f0:4f:7c:fb:2b:1a', ip_address: '192.168.97.191', hostname: 'kindlePaperwhite.wlan' }
+  - { mac_address: '00:bb:3a:33:2e:87', ip_address: '192.168.97.192', hostname: 'kindleVoyager.wlan' }
+  - { mac_address: '2c:9e:fc:dd:4b:ce', ip_address: '192.168.97.195', hostname: 'canonEOS70.wlan' }
+  - { mac_address: '60:12:8b:af:93:80', ip_address: '192.168.97.196', hostname: 'canonEOS80.wlan' }
+  - { mac_address: '88:87:17:f4:02:49', ip_address: '192.168.97.197', hostname: 'canonIxus.wlan' }
+  - { mac_address: '00:c0:ca:88:86:43', ip_address: '192.168.97.230', hostname: 'wlan01.wlan' }
+  - { mac_address: '00:c0:ca:82:4c:8f', ip_address: '192.168.97.231', hostname: 'wlan02.wlan' }
+  - { mac_address: 'b8:68:23:26:80:52', ip_address: '192.168.97.240', hostname: 'sdcard.wlan' }
+
+ssh_keys:
+  - { user: 'schama',  key: "{{ lookup('file', 'id_rsa.schama.pub') }}" }
+
+do_mount_filesystems: true
+do_software_upgrade: true
+do_nfcDevice: false

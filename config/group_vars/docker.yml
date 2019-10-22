@@ -1,0 +1,6 @@
+---
+admin_groups: 
+  - sudo-nopwd
+  - docker
+do_software_upgrade: false
+do_mount_filesystems: false

@@ -1,0 +1,32 @@
+---
+- name: Generate Directory Structure for Network-Mounts
+  file:
+    path: "{{ item.mountpoint }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  when: do_mount_filesystems
+  with_items:
+    - "{{ mount_filesystems }}"
+
+- name: Install Filesystempackages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: no
+  when: do_software_upgrade
+  with_items:
+    - cifs-utils
+    - nfs-common
+
+- name: Mount remote-filesystem
+  mount:
+    path: "{{ item.mountpoint }}"
+    src: "{{ item.remote }}"
+    fstype: "{{ item.type }}"
+    opts: "{{ item.options }}"
+    state: mounted
+  when: do_mount_filesystems
+  with_items:
+    - "{{ mount_filesystems }}"

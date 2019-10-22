@@ -1,0 +1,11 @@
+---
+- name: Install default NFC-Packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - libnfc-bin
+    - neard
+  when:
+    - do_nfcDevice

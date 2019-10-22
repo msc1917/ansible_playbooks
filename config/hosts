@@ -1,0 +1,26 @@
+[raspi3-docker]
+docker01	serveNet_ip="172.16.1.1"
+docker02	serveNet_ip="172.16.1.2"
+docker03	serveNet_ip="172.16.1.3"
+docker04	serveNet_ip="172.16.1.4"
+docker05	serveNet_ip="172.16.1.5"
+docker06	serveNet_ip="172.16.1.6"
+
+[raspi2-docker]
+
+[raspi1-docker]
+
+[raspi1-worker]
+worker01
+worker02
+
+[docker-x86]
+
+[docker-raspi:children]
+raspi3-docker
+raspi2-docker
+raspi1-docker
+
+[docker:children]
+docker-raspi
+docker-x86
