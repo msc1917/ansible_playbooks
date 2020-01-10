@@ -14,9 +14,9 @@ vlan:
   VirtualNET: { vlan: "3", ip_range: "172.31.0.1/16" }
 
 storage:
-  eremitage: { address: "192.168.96.20", username: "sys-techaccount", password: password['eremitage']['sysaccount'].password }
-  pushkin:   { address: "192.168.96.24", username: "sys-techaccount", password: password['pushkin']['sysaccount'].password }
-  potemkin:  { address: "192.168.96.25", username: "systech", password: password['potemkin']['sysaccount'].password }
+  eremitage: { address: "192.168.96.20", username: "sys-techaccount", password: "5odrIzxAYIFP3dBJjZuZ" }
+  pushkin:   { address: "192.168.96.24", username: "sys-techaccount", password: "5odrIzxAYIFP3dBJjZuZ" }
+  potemkin:  { address: "192.168.96.25", username: "systech", password: "AYIFP3dB" }
 
 admin_groups:
   - sudo-nopwd
@@ -24,7 +24,7 @@ admin_groups:
 admin_users:
   - { name: 'schama',
       full_name: Martin Schatz',
-      password: password['osuser']['schama'].password,
+      password: "$6$Bs9brwhwtmUxcza$flnSG.LhQBxF2i5rJ.MCo7.nwkvtArypboTW3z9Nwha7KUETyUYec8gHACsFCzyhTUYK7CegA0MBaOHxtncgL.",
       uid: '1200',
       shell: '/bin/bash' }
 
@@ -63,6 +63,8 @@ mount_filesystems:
       options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" 
 }
 dhcp_config:
+  - { mac_address: 'dc:a6:32:51:84:dd', ip_address: '192.168.96.205',   hostname: 'ml1' }
+  - { mac_address: 'dc:a6:32:51:84:de', ip_address: '192.168.97.206',   hostname: 'ml1.wlan' }
   - { mac_address: 'b8:27:eb:77:35:b0', ip_address: '192.168.96.5',   hostname: 'jumphost' }
   - { mac_address: 'b8:27:eb:85:11:97', ip_address: '192.168.96.2',   hostname: 'docker01' }
   - { mac_address: 'b8:27:eb:c7:a6:73', ip_address: '192.168.96.8',   hostname: 'docker02' }
