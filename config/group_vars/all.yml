@@ -97,10 +97,10 @@ dhcp_config:
   - { mac_address: '00:1e:2a:43:34:c7', ip_address: '192.168.96.17',  hostname: 'switch07' }
   - { mac_address: '00:1e:2a:ad:d4:6f', ip_address: '192.168.96.18',  hostname: 'switch08' }
   - { mac_address: '00:1e:2a:43:35:3f', ip_address: '192.168.96.19',  hostname: 'switch09' }
-  - { mac_address: '00:11:32:40:17:4d', ip_address: '192.168.96.20',  hostname: 'eremitage-eth01' }
-  - { mac_address: '00:11:32:40:17:4e', ip_address: '192.168.96.21',  hostname: 'eremitage-eth02' }
-  - { mac_address: '00:11:32:40:17:4f', ip_address: '192.168.96.22',  hostname: 'eremitage-eth03' }
-  - { mac_address: '00:11:32:40:17:50', ip_address: '192.168.96.23',  hostname: 'eremitage-eth04' }
+  - { mac_address: '00:11:32:45:57:e5', ip_address: '192.168.96.20',  hostname: 'eremitage-eth01' }
+  - { mac_address: '00:11:32:45:57:e6', ip_address: '192.168.96.21',  hostname: 'eremitage-eth02' }
+  - { mac_address: '00:11:32:45:57:e7', ip_address: '192.168.96.22',  hostname: 'eremitage-eth03' }
+  - { mac_address: '00:11:32:45:57:e8', ip_address: '192.168.96.23',  hostname: 'eremitage-eth04' }
   - { mac_address: '00:90:a9:db:20:e1', ip_address: '192.168.96.24',  hostname: 'pushkin' }
   - { mac_address: '00:90:a9:bd:e5:4c', ip_address: '192.168.96.25',  hostname: 'potemkin' }
   - { mac_address: '00:14:38:49:c9:bf', ip_address: '192.168.96.30',  hostname: 'laserjet' }

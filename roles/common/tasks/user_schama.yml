@@ -1,0 +1,21 @@
+---
+- hosts: development
+  tasks:
+  - name: Create directories for user schama
+    file:
+      path: "{{ item }}"
+      state: directory
+      owner: schama
+      mode: "u=rwx,g=rwx,o=rx"
+   with_items:
+    - '/home/schama/script'
+    - '/home/schama/log'
+    - '/home/schama/data'
+    - '/home/schama/script/private'
+    - '/home/schama/script/work'
+    - '/home/schama/script/ncs2'
+    - '/home/schama/script/coral'
+    - '/home/schama/data/private'
+    - '/home/schama/data/work'
+    - '/home/schama/log/private'
+    - '/home/schama/log/work'
