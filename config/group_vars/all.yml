@@ -63,8 +63,10 @@ mount_filesystems:
       options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" 
 }
 dhcp_config:
-  - { mac_address: 'dc:a6:32:51:84:dd', ip_address: '192.168.96.205',   hostname: 'ml1' }
-  - { mac_address: 'dc:a6:32:51:84:de', ip_address: '192.168.97.206',   hostname: 'ml1.wlan' }
+  - { mac_address: 'dc:a6:32:51:84:dd', ip_address: '192.168.96.205', hostname: 'ml1' }
+  - { mac_address: 'dc:a6:32:51:84:de', ip_address: '192.168.97.205', hostname: 'ml1.wlan' }
+  - { mac_address: 'dc:a6:32:6e:0d:9b', ip_address: '192.168.96.206', hostname: 'ml2' }
+  - { mac_address: 'dc:a6:32:6e:0d:9c', ip_address: '192.168.97.206', hostname: 'ml2.wlan' }
   - { mac_address: 'b8:27:eb:77:35:b0', ip_address: '192.168.96.5',   hostname: 'jumphost' }
   - { mac_address: 'b8:27:eb:85:11:97', ip_address: '192.168.96.2',   hostname: 'docker01' }
   - { mac_address: 'b8:27:eb:c7:a6:73', ip_address: '192.168.96.8',   hostname: 'docker02' }
