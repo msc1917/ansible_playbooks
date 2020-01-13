@@ -41,7 +41,6 @@
     - debian-keyring
     - debian-archive-keyring
     - debian-ports-archive-keyring
-    - git
 
 - name: Default-Services
   service:

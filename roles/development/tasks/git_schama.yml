@@ -1,0 +1,14 @@
+---
+- hosts: development
+  tasks:
+  - name: Set up personal GIT-Repository
+    git:
+    repo: 'https://msc1917@bitbucket.org/msc1917/privatecode.git'
+    dest: /home/schama/script/private
+    version: development
+    update: no
+  - name: Set up work GIT-Repository
+    git:
+    repo: 'https://msc1917@bitbucket.org/msc1917/workcode.git'
+    dest: /home/schama/script/work
+    update: no

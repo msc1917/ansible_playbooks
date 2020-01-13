@@ -1,0 +1,8 @@
+---
+- hosts: development
+  tasks:
+  - name: Install default development Packages
+    apt:
+      name: [ git ]
+      state: present
+      update_cache: no

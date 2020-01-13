@@ -1,3 +1,18 @@
 ---
+- name: Check for user schama
+  getent: 
+    database: passwd 
+    key: schama
+    register: schama_exists
+- name: Set up system for development
+  include_tasks: setup_system.yml
 - name: Set up User schama
   include_tasks: user_schama.yml
+  become: yes
+  become_user: schama
+  when: schama_exists == true
+- name: Set up GIT-Repositories for schama
+  include_tasks: git_schama.yml
+  become: yes
+  become_user: schama
+  when: schama_exists == true
