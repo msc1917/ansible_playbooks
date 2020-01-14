@@ -10,15 +10,11 @@
   with_items:
     - "{{ mount_filesystems }}"
 
-- name: Install Filesystempackages
+- name: Install Software packages for mount
   apt:
-    name: "{{ item }}"
+    name: [ cifs-utils, nfs-common ]
     state: present
     update_cache: no
-  when: do_software_upgrade
-  with_items:
-    - cifs-utils
-    - nfs-common
 
 - name: Mount remote-filesystem
   mount:
