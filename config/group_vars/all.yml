@@ -57,11 +57,7 @@ mount_filesystems:
       remote: "//{{ storage['potemkin'].address }}/mediadata", 
       type: 'cifs', 
       options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" }
-  - { mountpoint: '/media/storage/potemkin', 
-      remote: "//{{ storage['potemkin'].address }}/mediadata", 
-      type: 'cifs', 
-      options: "username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" 
-}
+
 dhcp_config:
   - { mac_address: 'dc:a6:32:51:84:dd', ip_address: '192.168.96.205', hostname: 'ml1' }
   - { mac_address: 'dc:a6:32:51:84:de', ip_address: '192.168.97.205', hostname: 'ml1.wlan' }
@@ -69,23 +65,23 @@ dhcp_config:
   - { mac_address: 'dc:a6:32:6e:0d:9c', ip_address: '192.168.97.206', hostname: 'ml2.wlan' }
   - { mac_address: 'b8:27:eb:77:35:b0', ip_address: '192.168.96.5',   hostname: 'jumphost' }
   - { mac_address: 'b8:27:eb:85:11:97', ip_address: '192.168.96.2',   hostname: 'docker01' }
-  - { mac_address: 'b8:27:eb:c7:a6:73', ip_address: '192.168.96.8',   hostname: 'docker02' }
-  - { mac_address: 'b8:27:eb:e4:90:58', ip_address: '192.168.96.8',   hostname: 'docker03' }
-  - { mac_address: 'b8:27:eb:4e:8f:f4', ip_address: '192.168.96.3',   hostname: 'docker04' }
-  - { mac_address: 'b8:27:eb:1e:68:a1', ip_address: '192.168.96.204', hostname: 'docker05' }
-  - { mac_address: 'b8:27:eb:23:fd:24', ip_address: '192.168.96.8',   hostname: 'docker06' }
   - { mac_address: 'b8:27:eb:b1:c5:0d', ip_address: '192.168.97.8',   hostname: 'docker01.wlan' }
+  - { mac_address: 'b8:27:eb:c7:a6:73', ip_address: '192.168.96.8',   hostname: 'docker02' }
   - { mac_address: 'b8:27:eb:92:f3:26', ip_address: '192.168.97.8',   hostname: 'docker02.wlan' }
+  - { mac_address: 'b8:27:eb:e4:90:58', ip_address: '192.168.96.8',   hostname: 'docker03' }
   - { mac_address: 'b8:27:eb:d0:44:c2', ip_address: '192.168.97.2',   hostname: 'docker03.wlan' }
+  - { mac_address: 'b8:27:eb:4e:8f:f4', ip_address: '192.168.96.3',   hostname: 'docker04' }
   - { mac_address: 'b8:27:eb:1b:da:a1', ip_address: '192.168.97.3',   hostname: 'docker04.wlan' }
+  - { mac_address: 'b8:27:eb:1e:68:a1', ip_address: '192.168.96.204', hostname: 'docker05' }
   - { mac_address: 'b8:27:eb:4b:3d:f4', ip_address: '192.168.97.204', hostname: 'docker05.wlan' }
+  - { mac_address: 'b8:27:eb:23:fd:24', ip_address: '192.168.96.8',   hostname: 'docker06' }
   - { mac_address: 'b8:27:eb:76:a8:71', ip_address: '192.168.97.204', hostname: 'docker06.wlan' }
   - { mac_address: 'b8:27:eb:d9:c6:1d', ip_address: '192.168.96.200', hostname: 'worker01' }
   - { mac_address: 'b8:27:eb:47:5f:03', ip_address: '192.168.96.201', hostname: 'worker02' }
   - { mac_address: 'b8:27:eb:7a:ff:20', ip_address: '192.168.96.202', hostname: 'raspi2-1' }
   - { mac_address: 'b8:27:eb:1d:92:ab', ip_address: '192.168.96.203', hostname: 'raspi2-2' }
-  - { mac_address: 'b8:27:eb:79:7e:9f', ip_address: '192.168.96.228', hostname: 'display' }
-  - { mac_address: 'b8:27:eb:2c:2b:ca', ip_address: '192.168.97.228', hostname: 'display.wlan' }
+  - { mac_address: 'b8:27:eb:79:7e:9f', ip_address: '192.168.96.228', hostname: 'control' }
+  - { mac_address: 'b8:27:eb:2c:2b:ca', ip_address: '192.168.97.228', hostname: 'control.wlan' }
   - { mac_address: 'b8:27:eb:73:cc:a6', ip_address: '192.168.96.229', hostname: 'testing' }
   - { mac_address: 'b8:27:eb:26:99:f3', ip_address: '192.168.97.229', hostname: 'testing.wlan' }
   - { mac_address: 'a0:63:91:b8:1b:7a', ip_address: '192.168.96.1',   hostname: 'gateway' }
