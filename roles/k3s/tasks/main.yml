@@ -1,21 +1,22 @@
 ---
+- name: Set prereqs for kubernetes
+  include_tasks: k3s-prereq.yml
+  when: ( k3s_node == "master" or k3s_node == "node" )
 
-- hosts: k3s-cluster
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: prereq }
-    - { role: download }
-    - { role: raspbian }
+- name: Set prereqs for kubernetes
+  include_tasks: k3s-download.yml
+  when: ( k3s_node == "master" or k3s_node == "node" )
+  loop_control:
+      loop_var: host_item
 
-- hosts: master
-#  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s/master }
+- name: Set prereqs for kubernetes
+  include_tasks: k3s-raspbian.yml
+  when: ( k3s_node == "master" or k3s_node == "node" )
 
-- hosts: node
-#  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s/node }
+- name: Setup kubernetes master
+  include_tasks: k3s-master.yml
+  when: k3s_node == "master"
+
+- name: Setup kubernetes node
+  include_tasks: k3s-node.yml
+  when: k3s_node == "node"

@@ -3,7 +3,7 @@
 - name: Copy K3s service file
   register: k3s_service
   template:
-    src: "k3s.service.j2"
+    src: "k3s.service.master.j2"
     dest: "{{ systemd_dir }}/k3s.service"
     owner: root
     group: root
@@ -56,7 +56,7 @@
     dest: /home/{{ ansible_user }}/.kube/config
     remote_src: yes
     owner: "{{ ansible_user }}"
-
+- debug: var=master_ip
 - name: Replace https://localhost:6443 by https://master-pi:6443
   replace:
     path: /home/{{ ansible_user }}/.kube/config

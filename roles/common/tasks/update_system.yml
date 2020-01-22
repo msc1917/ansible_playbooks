@@ -1,4 +1,15 @@
 ---
+- name: Register Keys
+  apt_key:
+    url: https://ftp-master.debian.org/keys/archive-key-10.asc
+    state: present
+  with_items:
+    - https://ftp-master.debian.org/keys/archive-key-10-security.asc
+    - https://ftp-master.debian.org/keys/archive-key-10.asc
+  when: 
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "buster"
+
 - name: Upgrade Packages
   apt:
     upgrade: yes
