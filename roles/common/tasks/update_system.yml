@@ -10,16 +10,16 @@
     - ansible_distribution == "Debian"
     - ansible_distribution_release == "buster"
 
-- name: Upgrade Packages
-  apt:
-    upgrade: yes
-    update_cache: yes
-  when: do_software_upgrade
+# - name: Upgrade Packages
+#   apt:
+#     upgrade: yes
+#     update_cache: yes
+#   when: do_software_upgrade
 
 - name: Deinstall Packages
   apt:
     name: "{{ item }}"
-    state: present
+    state: absent 
     update_cache: no
   with_items:
     - cloud-init
