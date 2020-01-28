@@ -1,5 +1,27 @@
 ---
-- name: Register Keys
+- name: Add repository for Debian Stretch
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi firmware
+    - deb http://archive.raspberrypi.org/debian/ stretch main ui
+  when: 
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "stretch"
+
+- name: Add repository for Debian Buster
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+  with_items:
+    - deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi firmware
+    - deb http://archive.raspberrypi.org/debian/ stretch main ui
+  when: 
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "buster"
+
+- name: Register Keys for Debian Buster
   apt_key:
     url: https://ftp-master.debian.org/keys/archive-key-10.asc
     state: present
@@ -10,16 +32,14 @@
     - ansible_distribution == "Debian"
     - ansible_distribution_release == "buster"
 
-# - name: Upgrade Packages
-#   apt:
-#     upgrade: yes
-#     update_cache: yes
-#   when: do_software_upgrade
+- name: Install default Packages
+  apt:
+    name: [ 'vlan', 'debian-keyring', 'debian-archive-keyring', 'debian-ports-archive-keyring' ]
+    state: present
+    update_cache: yes
 
 - name: Deinstall Packages
   apt:
-    name: "{{ item }}"
+    name: [ 'cloud-init' ]
     state: absent 
     update_cache: no
-  with_items:
-    - cloud-init

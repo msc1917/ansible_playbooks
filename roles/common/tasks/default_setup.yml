@@ -19,29 +19,6 @@
   timezone:
     name: Europe/Vienna
 
-- name: Add repository for Raspian stretch
-  apt_repository:
-    repo: "{{ item }}"
-    state: present
-  with_items:
-    - deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi firmware
-    - deb http://archive.raspberrypi.org/debian/ stretch main ui
-  when: 
-    - ansible_distribution == "Debian"
-    - ansible_distribution_release == "stretch"
-    - ansible_architecture == "armv6l"
-
-- name: Install default Packages
-  apt:
-    name: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items:
-    - vlan
-    - debian-keyring
-    - debian-archive-keyring
-    - debian-ports-archive-keyring
-
 - name: Default-Services
   service:
     name: "{{ item }}"
@@ -57,3 +34,4 @@
 
 - hostname:
     name: "{{ ansible_hostname }}"
+    # use: debian
