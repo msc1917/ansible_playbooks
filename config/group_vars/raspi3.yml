@@ -1,0 +1,4 @@
+---
+hardware:
+  wireless_lan: true
+  bluetooth: true

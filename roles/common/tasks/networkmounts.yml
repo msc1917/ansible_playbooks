@@ -24,5 +24,6 @@
     opts: "{{ item.options }}"
     state: mounted
   when: do_mount_filesystems
+  ignore_errors: yes
   with_items:
     - "{{ mount_filesystems }}"

@@ -1,4 +1,13 @@
 ---
+- name: Set Hostname
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Generiere /etc/hosts-file
+  template:
+    src=hosts.j2
+    dest=/etc/hosts
+
 - name: Generate locales
   locale_gen:
     name: "{{ item }}"
@@ -31,7 +40,3 @@
   modprobe:
     name: 8021q
     state: present
-
-- hostname:
-    name: "{{ ansible_hostname }}"
-    # use: debian
