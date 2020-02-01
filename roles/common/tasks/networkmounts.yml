@@ -1,4 +1,22 @@
 ---
+- name: Install Software packages for mount
+  apt:
+    name: [ cifs-utils, nfs-common ]
+    state: present
+    update_cache: no
+
+- name: Unmount remote-filesystem
+  mount:
+    path: "{{ item.mountpoint }}"
+    src: "{{ item.remote }}"
+    fstype: "{{ item.type }}"
+    opts: "{{ item.options }}"
+    state: unmounted
+  when: do_mount_filesystems
+  ignore_errors: yes
+  with_items:
+    - "{{ mount_filesystems }}"
+
 - name: Generate Directory Structure for Network-Mounts
   file:
     path: "{{ item.mountpoint }}"
@@ -10,19 +28,13 @@
   with_items:
     - "{{ mount_filesystems }}"
 
-- name: Install Software packages for mount
-  apt:
-    name: [ cifs-utils, nfs-common ]
-    state: present
-    update_cache: no
-
 - name: Mount remote-filesystem
   mount:
     path: "{{ item.mountpoint }}"
     src: "{{ item.remote }}"
     fstype: "{{ item.type }}"
     opts: "{{ item.options }}"
-    state: mounted
+    state: present
   when: do_mount_filesystems
   ignore_errors: yes
   with_items:
