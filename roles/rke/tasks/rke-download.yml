@@ -1,0 +1,39 @@
+---
+- name: Downloading newest rke binaries locally
+  local_action: get_url url={{ item }} dest={{ role_path }}/files
+  run_once: true
+  with_items: 
+    - https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-amd64
+    - https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-arm64
+    - https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-arm
+
+- name: Copy rke binary x64
+  copy:
+      src: "{{ role_path }}/files/rke_linux-amd64"
+      dest: /home/rke/rke
+      owner: rke
+      group: rke
+      mode: 755
+  when: ( ansible_facts.architecture == "x86_64" )
+
+- name: Copy rke binary arm64
+  copy:
+      src: "{{ role_path }}/files/rke_linux-arm64"
+      dest: /home/rke/rke
+      owner: rke
+      group: rke
+      mode: 755
+  when: ( ansible_facts.architecture is search("arm") )
+          and
+        ( ansible_facts.userspace_bits == "64" )
+
+- name: Copy rke binary armhf
+  copy:
+      src: "{{ role_path }}/files/rke_linux-arm"
+      dest: /home/rke/rke
+      owner: rke
+      group: rke
+      mode: 755
+  when: ( ansible_facts.architecture is search("arm") )
+          and
+        ( ansible_facts.userspace_bits == "32" )

@@ -1,22 +1,22 @@
 ---
 - name: Set prereqs for kubernetes
   include_tasks: k3s-prereq.yml
-  when: ( k3s_node == "master" or k3s_node == "node" )
+  when: ( k8s_node == "master" or k8s_node == "node" )
 
 - name: Set prereqs for kubernetes
   include_tasks: k3s-download.yml
-  when: ( k3s_node == "master" or k3s_node == "node" )
+  when: ( k8s_node == "master" or k8s_node == "node" )
   loop_control:
       loop_var: host_item
 
 - name: Set prereqs for kubernetes
   include_tasks: k3s-raspbian.yml
-  when: ( k3s_node == "master" or k3s_node == "node" )
+  when: ( k8s_node == "master" or k8s_node == "node" )
 
 - name: Setup kubernetes master
   include_tasks: k3s-master.yml
-  when: k3s_node == "master"
+  when: k8s_node == "master"
 
 - name: Setup kubernetes node
   include_tasks: k3s-node.yml
-  when: k3s_node == "node"
+  when: k8s_node == "node"

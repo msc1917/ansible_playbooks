@@ -1,0 +1,12 @@
+---
+- name: Create rke-users
+  include_tasks: rke-create_user.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined
+    
+- name: Download rke-binary
+  include_tasks: rke-download.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined

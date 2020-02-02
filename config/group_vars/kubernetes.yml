@@ -1,9 +1,8 @@
 ---
 do_software_upgrade: false
-do_mount_filesystems: false
-admin_groups: 
-  - sudo-nopwd
-  - docker
+kubernetes_ssh_keys:
+  - schama
+
 kubernetes_default_roles:
   - controlplane
   - worker

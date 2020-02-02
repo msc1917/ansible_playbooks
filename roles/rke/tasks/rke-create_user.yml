@@ -1,0 +1,47 @@
+---
+- name: Create rke Group
+  group:
+    name: "rke"
+    gid: 1198
+    state: present
+
+- name: Create rke User
+  user:
+    name: "rke"
+    comment: "rke User"
+    group: "rke"
+    groups: 
+      - "docker"
+      - "sudo-nopwd"
+    uid: 1196
+    shell: "/bin/bash"
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
+    state: present
+
+- name: Collect public keys of rke-users 
+  shell: "cat /home/rke/.ssh/id_rsa.pub"
+  changed_when: False
+  register: ssh_public_key
+
+- name: Set SSH-Key for default Admin User
+  authorized_key:
+    user: "rke"
+    key: "{{ item.key }}"
+    state: present
+  with_items:
+    - "{{ ssh_keys }}"
+  when: item.user in kubernetes_ssh_keys
+      
+- name: Set SSH-Key for kubernetes-users
+  authorized_key:
+    user: "{{ item[1] }}"
+    key: "{{ item[2] }}"
+    state: present
+  delegate_to: "{{ item[0] }}"
+  with_nested:
+    - "{{groups['kubernetes']}}"
+    - "rke"
+    - "{{ ssh_public_key.stdout }}"
+  when: item[0] != inventory_hostname
