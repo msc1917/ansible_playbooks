@@ -11,13 +11,18 @@ network:
 
 vlan:
   default:    { vlan: "1", ip_range: "192.168.96.1/22" }
-  ServeNET:   { vlan: "2", ip_range: "172.16.0.1/16" }
-  VirtualNET: { vlan: "3", ip_range: "172.31.0.1/16" }
+  serveNet:   { vlan: "2", ip_range: "172.16.0.1/16" }
+  virtualNet: { vlan: "3", ip_range: "172.31.0.1/16" }
+
+wlan:
+  home01:   {ssid: "kosmodrom_5ghz",   psk: "sovietunion1917russia", scan_ssid: 1, band: "5ghz"}
+  home02:   {ssid: "kosmodrom_24ghz",  psk: "sovietunion1917russia", scan_ssid: 1, band: "24ghz"}
+  mobile01: {ssid: "kosmodrom_mobile", psk: "sovietunion1917",       scan_ssid: 1, band: "24ghz"}
 
 storage:
   eremitage: { address: "192.168.96.20", username: "sys-techaccount", password: "5odrIzxAYIFP3dBJjZuZ" }
   pushkin:   { address: "192.168.96.24", username: "sys-techaccount", password: "5odrIzxAYIFP3dBJjZuZ" }
-  potemkin:  { address: "192.168.96.25", username: "systech", password: "AYIFP3dB" }
+  potemkin:  { address: "192.168.96.25", username: "systech",         password: "AYIFP3dB" }
 
 admin_groups:
   - sudo-nopwd

@@ -1,14 +1,17 @@
 ---
-- name: Upgrade Software
-  include_tasks: update_system.yml
-  when: do_software_upgrade
+# - name: Upgrade Software
+#   include_tasks: update_system.yml
+#   when: do_software_upgrade
 
-- name: Setup default Envriroment
-  include_tasks: default_setup.yml
+# - name: Setup default Envriroment
+#   include_tasks: default_setup.yml
 
-- name: Setup Users
-  include_tasks: user.yml
+# - name: Setup Users
+#   include_tasks: user.yml
 
-- name: Setup Network Mounts
-  include_tasks: networkmounts.yml
-  when: do_mount_filesystems
+- name: Setup Network
+  include_tasks: network.yml
+
+# - name: Setup Network Mounts
+#   include_tasks: networkmounts.yml
+#   when: do_mount_filesystems

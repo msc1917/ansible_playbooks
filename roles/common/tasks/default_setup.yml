@@ -5,8 +5,11 @@
 
 - name: Generiere /etc/hosts-file
   template:
-    src=hosts.j2
-    dest=/etc/hosts
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: Generate locales
   locale_gen:

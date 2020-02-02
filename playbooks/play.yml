@@ -3,6 +3,6 @@
   roles:
     - role: common
 
-- hosts: docker
-  roles:
-    - role: docker
+# - hosts: docker
+#   roles:
+#     - role: docker
