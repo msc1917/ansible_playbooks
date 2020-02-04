@@ -44,4 +44,4 @@
     - "{{groups['kubernetes']}}"
     - "rke"
     - "{{ ssh_public_key.stdout }}"
-  when: item[0] != inventory_hostname
+  # when: item[0] != inventory_hostname

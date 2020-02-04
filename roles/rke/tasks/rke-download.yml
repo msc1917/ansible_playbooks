@@ -14,7 +14,10 @@
       owner: rke
       group: rke
       mode: 755
-  when: ( ansible_facts.architecture == "x86_64" )
+  when:
+    - ansible_facts.architecture == "x86_64"
+    - k8s_node is defined
+    - k8s_node == "master"
 
 - name: Copy rke binary arm64
   copy:
@@ -23,9 +26,11 @@
       owner: rke
       group: rke
       mode: 755
-  when: ( ansible_facts.architecture is search("arm") )
-          and
-        ( ansible_facts.userspace_bits == "64" )
+  when:
+    - ansible_facts.architecture is search("arm")
+    - ansible_facts.userspace_bits == "64"
+    - k8s_node is defined
+    - k8s_node == "master"
 
 - name: Copy rke binary armhf
   copy:
@@ -34,6 +39,8 @@
       owner: rke
       group: rke
       mode: 755
-  when: ( ansible_facts.architecture is search("arm") )
-          and
-        ( ansible_facts.userspace_bits == "32" )
+  when:
+    - ansible_facts.architecture is search("arm")
+    - ansible_facts.userspace_bits == "32"
+    - k8s_node is defined
+    - k8s_node == "master"

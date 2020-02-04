@@ -3,13 +3,23 @@
   hostname:
     name: "{{ inventory_hostname }}"
 
-- name: Generiere /etc/hosts-file
+- name: Generiere /etc/hosts-file - default
   template:
     src: hosts.j2
     dest: /etc/hosts
     owner: root
     group: root
     mode: '0644'
+  when: serveNet_ip is not defined
+
+- name: Generiere /etc/hosts-file - serveNet
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+  when: serveNet_ip is defined
 
 - name: Generate locales
   locale_gen:

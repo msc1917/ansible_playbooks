@@ -1,0 +1,10 @@
+---
+- name: Add arm_64bit in config.txt
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^arm_64bit'
+    insertafter: '# Additional overlays and parameters are documented /boot/overlays/README'
+    line: arm_64bit=1
+  when:
+    - ansible_facts.architecture is search("arm")
+    - ansible_facts.userspace_bits == "32"

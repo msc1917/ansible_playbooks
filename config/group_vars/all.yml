@@ -9,10 +9,12 @@ network:
   nameserver:
     - 192.168.96.1
 
+kubernetes_engine: rke
+
 vlan:
-  default:    { vlan: "1", ip_range: "192.168.96.1/22" }
-  serveNet:   { vlan: "2", ip_range: "172.16.0.1/16" }
-  virtualNet: { vlan: "3", ip_range: "172.31.0.1/16" }
+  default:    { vlan: "1", ip_range: "192.168.96.1/22", domain: "baikonur.at" }
+  serveNet:   { vlan: "2", ip_range: "172.16.0.1/16",   domain: "serv.baikonur.at" }
+  virtualNet: { vlan: "3", ip_range: "172.31.0.1/16",   domain: "virtual.baikonur.at" }
 
 wlan:
   home01:   {ssid: "kosmodrom_5ghz",   psk: "sovietunion1917russia", scan_ssid: 1, band: "5ghz"}
