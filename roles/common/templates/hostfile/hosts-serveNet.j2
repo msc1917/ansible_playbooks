@@ -1,0 +1,10 @@
+# {{ ansible_managed }}
+127.0.0.1       localhost
+127.0.1.1       {{ inventory_hostname }}	{{ inventory_hostname }}.{{ network.domain }}	{{ inventory_hostname }}{{ vlan.serveNet.domain }}
+::1             localhost ip6-localhost ip6-loopback
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+{% for host in hostvars | sort %}
+{% if hostvars[host].serveNet_ip is defined %}{% if hostvars[host].inventory_hostname != inventory_hostname %}{{ hostvars[host].serveNet_ip }}	{{ hostvars[host].inventory_hostname }}.{{ vlan.serveNet.domain }}
+{% endif %}{% endif %}
+{% endfor %}

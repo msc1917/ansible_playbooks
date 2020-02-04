@@ -5,7 +5,7 @@
 
 - name: Generiere /etc/hosts-file - default
   template:
-    src: hosts.j2
+    src: hostfile/hosts.j2
     dest: /etc/hosts
     owner: root
     group: root
@@ -14,7 +14,7 @@
 
 - name: Generiere /etc/hosts-file - serveNet
   template:
-    src: hosts.j2
+    src: hostfile/hosts-serveNet.j2
     dest: /etc/hosts
     owner: root
     group: root
