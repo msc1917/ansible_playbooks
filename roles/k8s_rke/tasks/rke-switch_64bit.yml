@@ -1,4 +1,7 @@
 ---
+- debug:
+    msg: System Architecture {{ ansible_facts.architecture }}, {{ ansible_facts.userspace_bits }} bit
+
 - name: Add arm_64bit in config.txt
   lineinfile:
     path: /boot/config.txt

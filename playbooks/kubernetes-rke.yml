@@ -1,4 +1,4 @@
 ---
 - hosts: kubernetes
   roles:
-    - role: rke
+    - role: k8s_rke

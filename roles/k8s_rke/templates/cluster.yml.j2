@@ -9,7 +9,7 @@ nodes:
 {% for role in kubernetes_default_roles %}
   - {{ role }}
 {% endfor %}
-  hostname_override: "{{ hostvars[host].inventory_hostname }}"
+  hostname_override: "{{ hostvars[host].inventory_hostname }}.{{ vlan.serveNet.domain }}"
   user: "{{ rke_user }}"
   docker_socket: /var/run/docker.sock
   ssh_key: ""

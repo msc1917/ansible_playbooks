@@ -27,8 +27,8 @@
       group: rke
       mode: 755
   when:
-    - ansible_facts.architecture is search("arm")
-    - ansible_facts.userspace_bits == "64"
+    - ansible_facts.architecture is search("aarch64")
+    # - ansible_facts.userspace_bits == "64"
     - k8s_node is defined
     - k8s_node == "master"
 
