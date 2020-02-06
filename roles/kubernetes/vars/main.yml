@@ -1,0 +1,10 @@
+master_ip: "192.168.96.211"
+# master_ip: "{{ hostvars[groups['k3s-master'][0]]['ansible_host'] | default(groups['k3s-master'][0]) }}"
+
+k3s:      { version: 'v1.17.0%2Bk3s.1',
+            systemd_dir: '/etc/systemd/system' }
+
+rke:      { version: 'v1.0.4',
+            user: "rke" }
+
+minikube: { user: "kube" }

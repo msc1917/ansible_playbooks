@@ -1,5 +1,7 @@
 ---
 do_software_upgrade: false
+
+kubernetes_engine: kubeadm
 kubernetes_ssh_keys:
   - schama
 
