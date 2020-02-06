@@ -1,31 +1,31 @@
 ---
-- name: Create rke Group
+- name: Create kubeadm Group
   group:
-    name: {{ rke.os_user.group }}
-    gid: {{ rke.os_user.gid }}
+    name: {{ kubeadm.os_user.group }}
+    gid: {{ kubeadm.os_user.gid }}
     state: present
 
-- name: Create rke User
+- name: Create kubeadm User
   user:
-    name: {{ rke.os_user.user }}
-    comment: {{ rke.os_user.comment }}
-    group: {{ rke.os_user.group }}
-    groups: {{ rke.os_user.groups }}
-    uid: {{ rke.os_user.uid }}
+    name: {{ kubeadm.os_user.user }}
+    comment: {{ kubeadm.os_user.comment }}
+    group: {{ kubeadm.os_user.group }}
+    groups: {{ kubeadm.os_user.groups }}
+    uid: {{ kubeadm.os_user.uid }}
     shell: "/bin/bash"
     generate_ssh_key: yes
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
     state: present
 
-- name: Collect public keys of rke-users 
-  shell: "cat /home/{{ rke.os_user.user }}/.ssh/id_rsa.pub"
+- name: Collect public keys of kubeadm-users 
+  shell: "cat /home/{{ kubeadm.os_user.user }}/.ssh/id_rsa.pub"
   changed_when: False
   register: ssh_public_key
 
 - name: Set SSH-Key for default Admin User
   authorized_key:
-    user: {{ rke.os_user.user }}
+    user: {{ kubeadm.os_user.user }}
     key: "{{ item.key }}"
     state: present
   with_items:
@@ -40,6 +40,6 @@
   delegate_to: "{{ item[0] }}"
   with_nested:
     - "{{groups['kubernetes']}}"
-    - "{{ rke.os_user.user }}"
+    - "{{ kubeadm.os_user.user }}"
     - "{{ ssh_public_key.stdout }}"
   # when: item[0] != inventory_hostname

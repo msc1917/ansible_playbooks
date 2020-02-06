@@ -26,12 +26,6 @@ storage:
 
 admin_groups:
   - sudo-nopwd
-  
-active_ssh_keys:
-  - { user: 'schama', host: 'control', key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@sojus' }
-
-inactive_ssh_keys:
-  - { user: 'schama', host: 'sojus', key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@control' }
 
 admin_users:
   - { name: 'schama',
@@ -39,6 +33,13 @@ admin_users:
       password: "$6$Bs9brwhwtmUxcza$flnSG.LhQBxF2i5rJ.MCo7.nwkvtArypboTW3z9Nwha7KUETyUYec8gHACsFCzyhTUYK7CegA0MBaOHxtncgL.",
       uid: '1200',
       shell: '/bin/bash' }
+
+ssh_keys:
+  - { user: 'schama', host: 'sojus',   key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@sojus' }
+  - { user: 'schama', host: 'control', key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@control' }
+
+revoked_ssh_keys:
+  - { user: 'schama', host: 'sojus',   key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3t8r9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@control' }
 
 mount_filesystems:
   - { mountpoint: '/media/storage/eremitage/datastore', 
@@ -69,9 +70,6 @@ mount_filesystems:
       remote: "//{{ storage['potemkin'].address }}/mediadata", 
       type: 'cifs', 
       options: "vers=2.0,username={{ storage['potemkin'].username }},password={{ storage['potemkin'].password }}" }
-
-ssh_keys:
-  - { user: 'schama',  key: "{{ lookup('file', 'id_rsa.schama.pub') }}" }
 
 dhcp_config:
   - { mac_address: '2c:30:33:59:da:97', ip_address: '192.168.96.2',   hostname: 'wlan'                     }

@@ -1,0 +1,68 @@
+---
+- name: Add arm_64bit in config.txt
+  lineinfile:
+    path: /boot/config.txt
+    regexp: '^arm_64bit'
+    insertafter: '# Additional overlays and parameters are documented /boot/overlays/README'
+    line: arm_64bit=1
+  when:
+    - ansible_facts.architecture is search("arm")
+    - ansible_facts.userspace_bits == "32"
+---
+- name: Test for Raspbian
+  stat:
+    path: /boot/cmdline.txt
+  register: cmdline
+
+- name: Activating cgroup on Raspbian
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^(.*rootwait)$'
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+    backrefs: true
+  when: ( cmdline.stat.path is defined )
+          and
+        ( ansible_facts.architecture is search("arm") )
+  register: boot_cmdline
+
+
+- name: Set SELinux to disabled state
+  selinux:
+    state: disabled
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Enable IPv4 forwarding
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Enable IPv6 forwarding
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: "1"
+    state: present
+    reload: yes
+
+- name: Set bridge-nf-call-iptables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    state: present
+    reload: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Set bridge-nf-call-ip6tables
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    state: present
+    reload: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Rebooting on Raspbian 
+  reboot:
+  when: ( boot_cmdline is changed )
+          and
+        ( ansible_facts.architecture is search("arm") )

@@ -5,6 +5,23 @@ k3s:      { version: 'v1.17.0%2Bk3s.1',
             systemd_dir: '/etc/systemd/system' }
 
 rke:      { version: 'v1.0.4',
-            user: "rke" }
+            os_user: { 
+              comment: "rke User",
+              user: "kube",
+              uid: 1196,
+              group: "kube",
+              gid: 1196,
+              groups: [ "docker", "sudo-nopwd" ]
+              } 
+            }
 
-minikube: { user: "kube" }
+kubeadm:  { version: 'v1.0.4',
+            os_user: { 
+              comment: "Kubernetes User",
+              user: "kube",
+              uid: 1195,
+              group: "kube",
+              gid: 1195,
+              groups: [ "docker", "sudo-nopwd" ]
+              } 
+            }
