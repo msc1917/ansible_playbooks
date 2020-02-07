@@ -1,1 +1,46 @@
 ---
+- name: Setup Kubernetes Hosts
+  include_tasks: initial/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+
+- name: Deinstall other kubernetes-engines
+  include_tasks: cleanup/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+
+- name: Install minikube-engine
+  include_tasks: minikube/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - kubernetes_engine == "minikube"
+
+- name: Install vanilla kubernetes
+  include_tasks: kubeadm/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - kubernetes_engine == "kubeadm"
+
+- name: Install rke-engine
+  include_tasks: rke/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - kubernetes_engine == "rke"
+
+- name: Install k3s-engine
+  include_tasks: k3s/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - kubernetes_engine == "k3s"
+
+- name: Install additional tools
+  include_tasks: postinstall/main.yml
+  when:
+    - k8s_node is defined
+    - ( k8s_node == "master" or k8s_node == "node" )

@@ -1,11 +1,11 @@
-[raspi1-docker]
-[raspi2-docker]
-[raspi3-docker]
-[raspi4-docker]
+[raspi1_docker]
+[raspi2_docker]
+[raspi3_docker]
+[raspi4_docker]
 
-[raspi1-kubernetes]
-[raspi2-kubernetes]
-[raspi3-kubernetes]
+[raspi1_kubernetes]
+[raspi2_kubernetes]
+[raspi3_kubernetes]
 docker01 serveNet_ip="172.16.1.1" k8s_node="master"
 docker02 serveNet_ip="172.16.1.2" k8s_node="node"
 docker03 serveNet_ip="172.16.1.3" k8s_node="node"
@@ -13,7 +13,7 @@ docker04 serveNet_ip="172.16.1.4" k8s_node="node"
 docker05 serveNet_ip="172.16.1.5" k8s_node="node"
 docker06 serveNet_ip="172.16.1.6" k8s_node="node"
 
-[raspi4-kubernetes]
+[raspi4_kubernetes]
 docker07 serveNet_ip="172.16.1.7" k8s_node="node"
 docker08 serveNet_ip="172.16.1.8" k8s_node="node"
 docker09 serveNet_ip="172.16.1.9" k8s_node="node"
@@ -21,58 +21,58 @@ docker10 serveNet_ip="172.16.1.10" k8s_node="node"
 docker11 serveNet_ip="172.16.1.11" k8s_node="node"
 docker12 serveNet_ip="172.16.1.12" k8s_node="node"
 
-[raspi1-worker]
+[raspi1_worker]
 # worker01
 # worker02
 
-[raspi2-worker]
-[raspi3-worker]
-[raspi4-worker]
+[raspi2_worker]
+[raspi3_worker]
+[raspi4_worker]
 ml1
 ml2
 
-[docker-x86]
-[kubernetes-x86]
+[docker_x86]
+[kubernetes_x86]
 
-[k3s-master]
+[k3s_master]
 docker01
 
-[docker-raspi:children]
-raspi1-docker
-raspi2-docker
-raspi3-docker
-raspi4-docker
+[docker_raspi:children]
+raspi1_docker
+raspi2_docker
+raspi3_docker
+raspi4_docker
 
-[kubernetes-raspi:children]
-raspi1-kubernetes
-raspi2-kubernetes
-raspi3-kubernetes
-raspi4-kubernetes
+[kubernetes_raspi:children]
+raspi1_kubernetes
+raspi2_kubernetes
+raspi3_kubernetes
+raspi4_kubernetes
 
 [docker:children]
-docker-raspi
-docker-x86
+docker_raspi
+docker_x86
 
 [kubernetes:children]
-kubernetes-raspi
-kubernetes-x86
+kubernetes_raspi
+kubernetes_x86
 
 [raspi1:children]
-raspi1-worker
-raspi1-docker
-raspi1-kubernetes
+raspi1_worker
+raspi1_docker
+raspi1_kubernetes
 
 [raspi2:children]
-raspi2-worker
-raspi2-docker
-raspi2-kubernetes
+raspi2_worker
+raspi2_docker
+raspi2_kubernetes
 
 [raspi3:children]
-raspi3-worker
-raspi3-docker
-raspi3-kubernetes
+raspi3_worker
+raspi3_docker
+raspi3_kubernetes
 
 [raspi4:children]
-raspi4-worker
-raspi4-docker
-raspi4-kubernetes
+raspi4_worker
+raspi4_docker
+raspi4_kubernetes

@@ -1,34 +1,19 @@
----
-- name: Switch to 64-bit-kernel
-  include_tasks: rke-switch_64bit.yml
-  when: 
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - serveNet_ip is defined
-    - kubernetes_engine == "rke"
-
 - name: Create rke-users
-  include_tasks: rke-create_user.yml
+  include_tasks: rke/rke-create_user.yml
   when: 
     - ( k8s_node == "master" or k8s_node == "node" )
     - serveNet_ip is defined
     - kubernetes_engine == "rke"
 
 - name: Download rke-binary
-  include_tasks: rke-download.yml
-  when: 
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - serveNet_ip is defined
-    - kubernetes_engine == "rke"
-
-- name: Download kubernetes-binary
-  include_tasks: rke-install-software.yml
+  include_tasks: rke/rke-download.yml
   when: 
     - ( k8s_node == "master" or k8s_node == "node" )
     - serveNet_ip is defined
     - kubernetes_engine == "rke"
 
 - name: Generate rke-config-file
-  include_tasks: rke-create_config.yml
+  include_tasks: rke/rke-create_config.yml
   when: 
     - ( k8s_node == "master" or k8s_node == "node" )
     - serveNet_ip is defined
