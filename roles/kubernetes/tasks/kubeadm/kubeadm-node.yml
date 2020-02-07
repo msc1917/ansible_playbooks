@@ -1,0 +1,6 @@
+---
+# sudo kubeadm join 172.16.1.1:6443 --token fb60n9.or4hzpfp94jmqm77 --discovery-token-ca-cert-hash sha256:7684f6533231a0a32e2d1048fad0098343cc3a4b7a917834421c1d20598d42e9
+
+
+
+# sudo kubeadm reset

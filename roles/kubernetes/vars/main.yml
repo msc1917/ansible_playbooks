@@ -4,6 +4,14 @@ master_ip: "192.168.96.211"
 helm_version: 'v3.0.3'
 
 k3s:      { version: 'v1.17.0%2Bk3s.1',
+            os_user: { 
+              comment: "r3s User",
+              user: "k3s",
+              uid: 1197,
+              group: "k3s",
+              gid: 1197,
+              groups: [ "docker", "sudo-nopwd" ]
+              },
             systemd_dir: '/etc/systemd/system' }
 
 rke:      { version: 'v1.0.4',

@@ -40,3 +40,30 @@
     group: root
     mode: '0600'
   when: hardware["wireless_lan"] is defined
+
+- name: Generiere /etc/avahi/services/sftp-ssh.services
+  template:
+    src: avahi/ssh.services.j2
+    dest: /etc/avahi/services/ssh.services
+    owner: root
+    group: root
+    mode: '0644'
+  register: avahi_ssh
+
+- name: Generiere /etc/avahi/services/sftp-ssh.services
+  template:
+    src: avahi/sftp-ssh.services.j2
+    dest: /etc/avahi/services/sftp-ssh.services
+    owner: root
+    group: root
+    mode: '0644'
+  register: avahi_sftp
+
+- name: Restart avahi-daemon when services changed
+  systemd:
+    name: avahi-daemon
+    daemon_reload: yes
+    state: restart
+    enabled: yes
+  when:
+    - ( avahi_ssh.changed or avahi_sftp.changed )

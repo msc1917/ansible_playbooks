@@ -1,1 +1,17 @@
 ---
+- name: Remove kubeadm User
+  user:
+    name: {{ kubeadm.os_user.user }}
+    uid: {{ kubeadm.os_user.uid }}
+    state: absent
+
+- name: Remove kubeadm Group
+  group:
+    name: {{ kubeadm.os_user.group }}
+    gid: {{ kubeadm.os_user.gid }}
+    state: absent
+
+- name: Remove home-directory of user kubeadm
+  file:
+    path: "/home/{{ kubeadm.os_user.user }}"
+    state: absent

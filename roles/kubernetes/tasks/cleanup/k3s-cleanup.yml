@@ -1,1 +1,54 @@
 ---
+- name: Remove k3s User
+  user:
+    name: {{ k3s.os_user.user }}
+    uid: {{ k3s.os_user.uid }}
+    state: absent
+
+- name: Remove k3s Group
+  group:
+    name: {{ k3s.os_user.group }}
+    gid: {{ k3s.os_user.gid }}
+    state: absent
+
+- name: Remove home-directory of user k3s
+  file:
+    path: "/home/{{ k3s.os_user.user }}"
+    state: absent
+
+- name: Disable and check K3s service (node)
+  systemd:
+    name: k3s-node
+    daemon_reload: yes
+    state: stopped
+    enabled: no
+  when:
+    - k8s_node is defined
+    - k8s_node == "node"
+
+- name: Remove K3s service file (node)
+  file:
+    dest: "{{ systemd_dir }}/k3s-node.service"
+    state: absent
+  when:
+    - k8s_node is defined
+    - k8s_node == "node"
+
+- name: Disable and check K3s service (master)
+  systemd:
+    name: k3s-master
+    daemon_reload: yes
+    state: stopped
+    enabled: no
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+    
+- name: Remove K3s service file (master)
+  file:
+    dest: "{{ systemd_dir }}/k3s-master.service"
+    state: absent
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+

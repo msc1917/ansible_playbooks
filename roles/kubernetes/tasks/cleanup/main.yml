@@ -1,1 +1,28 @@
 ---
+- name: Remove minikube
+  include_tasks: cleanup/k3s-cleanup.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined
+    - ( kubernetes_engine =! "k3s" or kubernetes_reinstall is true )
+
+- name: Remove rke
+  include_tasks: cleanup/rke-cleanup.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined
+    - ( kubernetes_engine =! "rke" or kubernetes_reinstall is true )
+
+- name: Remove kubeadm
+  include_tasks: cleanup/kubeadm-cleanup.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined
+    - ( kubernetes_engine =! "kubeadm" or kubernetes_reinstall is true )
+
+- name: Remove minikube
+  include_tasks: cleanup/minikube-cleanup.yml
+  when: 
+    - ( k8s_node == "master" or k8s_node == "node" )
+    - serveNet_ip is defined
+    - ( kubernetes_engine =! "minikube" or kubernetes_reinstall is true )

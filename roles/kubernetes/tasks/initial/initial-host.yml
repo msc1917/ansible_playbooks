@@ -61,6 +61,13 @@
     reload: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
+- name: Register IP from master-node
+  set_fact: 
+    master_ip: "{{ ansible_default_ipv4.address }}"
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+
 - name: Rebooting on Raspbian 
   reboot:
   when: ( boot_cmdline is changed )
