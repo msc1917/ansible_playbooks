@@ -1,17 +1,17 @@
 ---
 - name: Create kubeadm Group
   group:
-    name: {{ kubeadm.os_user.group }}
-    gid: {{ kubeadm.os_user.gid }}
+    name: "{{ kubeadm.os_user.group }}"
+    gid: "{{ kubeadm.os_user.gid }}"
     state: present
 
 - name: Create kubeadm User
   user:
-    name: {{ kubeadm.os_user.user }}
-    comment: {{ kubeadm.os_user.comment }}
-    group: {{ kubeadm.os_user.group }}
-    groups: {{ kubeadm.os_user.groups }}
-    uid: {{ kubeadm.os_user.uid }}
+    name: "{{ kubeadm.os_user.user }}"
+    comment: "{{ kubeadm.os_user.comment }}"
+    group: "{{ kubeadm.os_user.group }}"
+    groups: "{{ kubeadm.os_user.groups }}"
+    uid: "{{ kubeadm.os_user.uid }}"
     shell: "/bin/bash"
     generate_ssh_key: yes
     ssh_key_bits: 2048
@@ -25,7 +25,7 @@
 
 - name: Set SSH-Key for default Admin User
   authorized_key:
-    user: {{ kubeadm.os_user.user }}
+    user: "{{ kubeadm.os_user.user }}"
     key: "{{ item.key }}"
     state: present
   with_items:
@@ -38,8 +38,9 @@
     key: "{{ item[2] }}"
     state: present
   delegate_to: "{{ item[0] }}"
+  ignore_errors: yes
   with_nested:
     - "{{groups['kubernetes']}}"
     - "{{ kubeadm.os_user.user }}"
     - "{{ ssh_public_key.stdout }}"
-  # when: item[0] != inventory_hostname
+  when: item[0] in ansible_play_hosts

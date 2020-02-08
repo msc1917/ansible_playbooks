@@ -1,6 +1,6 @@
 ---
-# sudo kubeadm join 172.16.1.1:6443 --token fb60n9.or4hzpfp94jmqm77 --discovery-token-ca-cert-hash sha256:7684f6533231a0a32e2d1048fad0098343cc3a4b7a917834421c1d20598d42e9
-
-
-
-# sudo kubeadm reset
+- name: Join to Kubernetes cluster
+  shell: 
+    cmd: kubeadm join --token {{ kubeadm_token }} --discovery-token-ca-cert-hash {{ kubeadm_sha_hash }} {{ master_ip }}:6443
+    creates: /etc/kubernetes/kubelet.conf
+  when: reset_cluster is succeeded

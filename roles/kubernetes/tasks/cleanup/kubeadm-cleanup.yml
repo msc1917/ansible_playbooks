@@ -1,14 +1,30 @@
 ---
+- name: Shut down existing kubernetes-cluster (node)
+  shell: 
+    cmd: "/usr/bin/kubeadm reset --force"
+    removes: "/etc/kubernetes/kubelet.conf"
+  when:
+    - k8s_node is defined
+    - k8s_node == "node"
+
+- name: Shut down existing kubernetes-cluster (master)
+  shell: 
+    cmd: "/usr/bin/kubeadm reset --force"
+    removes: "/etc/kubernetes/admin.conf"
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+
 - name: Remove kubeadm User
   user:
-    name: {{ kubeadm.os_user.user }}
-    uid: {{ kubeadm.os_user.uid }}
+    name: "{{ kubeadm.os_user.user }}"
+    uid: "{{ kubeadm.os_user.uid }}"
     state: absent
 
 - name: Remove kubeadm Group
   group:
-    name: {{ kubeadm.os_user.group }}
-    gid: {{ kubeadm.os_user.gid }}
+    name: "{{ kubeadm.os_user.group }}"
+    gid: "{{ kubeadm.os_user.gid }}"
     state: absent
 
 - name: Remove home-directory of user kubeadm

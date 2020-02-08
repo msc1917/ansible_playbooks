@@ -1,17 +1,17 @@
 ---
 - name: Create rke Group
   group:
-    name: {{ rke.os_user.group }}
-    gid: {{ rke.os_user.gid }}
+    name: "{{ rke.os_user.group }}"
+    gid: "{{ rke.os_user.gid }}"
     state: present
 
 - name: Create rke User
   user:
-    name: {{ rke.os_user.user }}
-    comment: {{ rke.os_user.comment }}
-    group: {{ rke.os_user.group }}
-    groups: {{ rke.os_user.groups }}
-    uid: {{ rke.os_user.uid }}
+    name: "{{ rke.os_user.user }}"
+    comment: "{{ rke.os_user.comment }}"
+    group: "{{ rke.os_user.group }}"
+    groups: "{{ rke.os_user.groups }}"
+    uid: "{{ rke.os_user.uid }}"
     shell: "/bin/bash"
     generate_ssh_key: yes
     ssh_key_bits: 2048
@@ -25,7 +25,7 @@
 
 - name: Set SSH-Key for default Admin User
   authorized_key:
-    user: {{ rke.os_user.user }}
+    user: "{{ rke.os_user.user }}"
     key: "{{ item.key }}"
     state: present
   with_items:
@@ -42,4 +42,4 @@
     - "{{groups['kubernetes']}}"
     - "{{ rke.os_user.user }}"
     - "{{ ssh_public_key.stdout }}"
-  # when: item[0] != inventory_hostname
+  when: item[0] in ansible_play_hosts

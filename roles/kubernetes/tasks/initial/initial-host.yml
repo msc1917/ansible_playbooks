@@ -8,7 +8,7 @@
   when:
     - ansible_facts.architecture is search("arm")
     - ansible_facts.userspace_bits == "32"
----
+
 - name: Test for Raspbian
   stat:
     path: /boot/cmdline.txt
@@ -24,7 +24,6 @@
           and
         ( ansible_facts.architecture is search("arm") )
   register: boot_cmdline
-
 
 - name: Set SELinux to disabled state
   selinux:
@@ -70,6 +69,4 @@
 
 - name: Rebooting on Raspbian 
   reboot:
-  when: ( boot_cmdline is changed )
-          and
-        ( ansible_facts.architecture is search("arm") )
+  when: boot_cmdline is changed

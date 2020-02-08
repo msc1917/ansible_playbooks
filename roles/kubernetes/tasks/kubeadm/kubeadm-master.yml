@@ -1,8 +1,37 @@
 ---
-# kubectl init
+- name: Initialize kubernetes-cluster
+  shell: 
+    cmd: "/usr/bin/kubeadm init"
+    creates: /etc/kubernetes/admin.conf
 
-# mkdir -p $HOME/.kube
-# sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-# sudo chown $(id -u):$(id -g) $HOME/.kube/config
+- name: Create Kubernetes config directory
+  file:
+    path: "/home/{{ kubeadm.os_user.user }}/.kube/"
+    owner: "{{ kubeadm.os_user.user }}"
+    group: "{{ kubeadm.os_user.group }}"
+    mode: '0755'
+    state: directory
 
-# sudo kubeadm reset
+- name: Register Kubernetes-Token
+  shell:
+    cmd: "kubeadm token list | tail -1 | cut -f 1 -d \" \""
+  register: kubeadm_token
+
+- name: Store Kubernetes-Token
+  set_fact: 
+    token: "{{ kubeadm_token.stdout | b64decode | regex_replace('\n', '') }}"
+
+- name: Register Kubernetes SHA-Hash
+  shell:
+    cmd: "openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //' "
+  register: kubeadm_sha_hash
+
+- name: Store Kubernetes SHA-Hash
+  set_fact: 
+    token: "{{ kubeadm_sha_hash.stdout | b64decode | regex_replace('\n', '') }}"
+
+- name: Store file into /tmp/fetched/host.example.com/tmp/somefile
+  fetch: 
+    src: "/etc/kubernetes/admin.conf"
+    dest: "{{ role_path }}/files/kubeadm_admin.conf"
+    flat: yes

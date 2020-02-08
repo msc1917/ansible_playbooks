@@ -42,4 +42,4 @@
     - "{{groups['kubernetes']}}"
     - "{{ k3s.os_user.user }}"
     - "{{ ssh_public_key.stdout }}"
-  # when: item[0] != inventory_hostname
+  when: item[0] in ansible_play_hosts

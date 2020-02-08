@@ -1,0 +1,23 @@
+---
+- name: Create Kubernetes config directory
+  file:
+    path: "/home/{{ kubeadm.os_user.user }}/.kube/"
+    owner: "{{ kubeadm.os_user.user }}"
+    group: "{{ kubeadm.os_user.group }}"
+    mode: '0755'
+    state: directory
+
+- name: Copy admin.conf to Home directory
+  copy:
+    src: "{{ role_path }}/files/kubeadm_admin.conf"
+    dest: "/home/{{ kubeadm.os_user.user }}/.kube/admin.conf"
+    owner: "{{ kubeadm.os_user.user }}"
+    group: "{{ kubeadm.os_user.group }}"
+    mode: '0644'
+
+ - name: Update .profile
+   lineinfile:
+     dest: "/home/{{ kubeadm.os_user.user }}/.profile"
+     state: present
+     insertbefore: "mesg n"
+     line: 'export KUBECONFIG=$HOME/.kube/config'

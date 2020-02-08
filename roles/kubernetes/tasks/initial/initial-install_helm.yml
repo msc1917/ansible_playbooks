@@ -1,7 +1,11 @@
 ---
-- name: Downloading newest rke binaries locally
-  local_action: get_url url={{ item }} dest={{ role_path }}/files
+- name: Downloading newest helm binaries locally
+  unarchive:
+      src: "{{ item }}" 
+      dest: "{{ role_path }}/files/"
+      remote_src: yes 
   run_once: true
+  delegate_to: localhost
   with_items: 
     - https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz
     - https://get.helm.sh/helm-{{ helm_version }}-linux-arm.tar.gz
@@ -9,143 +13,38 @@
 
 - name: Copy binary x64 to host
   copy:
-      src: "{{ role_path }}/files/helm-{{ helm_version }}-linux-amd64.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-      mode: '0755'
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture == "x86_64"
-
-- name: Unpack binary x64
-  unarchive:
-      src: "/tmp/helm-{{ helm_version }}-linux-amd64.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture == "x86_64"
-
-- name: Copy binary x64 to /usr/loal/bin
-  copy:
-      src: "/tmp/linux-amd64/helm"
+      src: "{{ role_path }}/files/linux-amd64/helm"
       dest: "/usr/local/bin/helm"
       owner: root
       group: root
       mode: '0755'
   when:
     - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
+    - k8s_node in [ "master", "node" ]
     - ansible_facts.architecture == "x86_64"
-
-- name: Delete binary x64 in /tmp
-  file:
-      path: "/tmp/linux-amd64"
-      state: absent
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture == "x86_64"
-
 
 - name: Copy binary arm64 to host
   copy:
-      src: "{{ role_path }}/files/helm-{{ helm_version }}-linux-arm64.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-      mode: '0755'
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture is search("aarch64")
-    # - ansible_facts.userspace_bits == "64"
-
-- name: Unpack binary arm64
-  unarchive:
-      src: "/tmp/helm-{{ helm_version }}-linux-arm64.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture is search("aarch64")
-    # - ansible_facts.userspace_bits == "64"
-
-- name: Copy binary arm64 to /usr/loal/bin
-  copy:
-      src: "/tmp/linux-arm64/helm"
+      src: "{{ role_path }}/files/linux-arm64/helm"
       dest: "/usr/local/bin/helm"
       owner: root
       group: root
       mode: '0755'
   when:
     - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-   - ansible_facts.architecture is search("aarch64")
+    - k8s_node in [ "master", "node" ]
+    - ansible_facts.architecture is search("aarch64")
     # - ansible_facts.userspace_bits == "64"
-
-- name: Delete binary arm64 in /tmp
-  file:
-      path: "/tmp/linux-arm64"
-      state: absent
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-   - ansible_facts.architecture is search("aarch64")
-    # - ansible_facts.userspace_bits == "64"
-
 
 - name: Copy binary armhf to host
   copy:
-      src: "{{ role_path }}/files/helm-{{ helm_version }}-linux-arm.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-      mode: '0755'
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture is search("arm")
-    - ansible_facts.userspace_bits == "32"
-
-- name: Unpack binary armhf
-  unarchive:
-      src: "/tmp/helm-{{ helm_version }}-linux-arm.tar.gz"
-      dest: /tmp/
-      owner: root
-      group: root
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture is search("arm")
-
-    - ansible_facts.userspace_bits == "32"
-
-- name: Copy binary armhf to /usr/loal/bin
-  copy:
-      src: "/tmp/linux-arm/helm"
+      src: "{{ role_path }}/files/linux-arm/helm"
       dest: "/usr/local/bin/helm"
       owner: root
       group: root
       mode: '0755'
   when:
     - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
-    - ansible_facts.architecture is search("arm")
-    - ansible_facts.userspace_bits == "32"
-
-- name: Delete binary armhf in /tmp
-  file:
-      path: "/tmp/linux-arm"
-      state: absent
-  when:
-    - k8s_node is defined
-    - ( k8s_node == "master" or k8s_node == "node" )
+    - k8s_node in [ "master", "node" ]
     - ansible_facts.architecture is search("arm")
     - ansible_facts.userspace_bits == "32"
