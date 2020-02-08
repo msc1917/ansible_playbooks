@@ -31,3 +31,8 @@
   file:
     path: "/home/{{ kubeadm.os_user.user }}"
     state: absent
+
+- name: Remove bash-completion /etc/bash_completion.d/kubectl
+  file:
+    path: "/etc/bash_completion.d/kubectl"
+    state: absent

@@ -15,9 +15,14 @@
     group: "{{ kubeadm.os_user.group }}"
     mode: '0644'
 
- - name: Update .profile
-   lineinfile:
-     dest: "/home/{{ kubeadm.os_user.user }}/.profile"
-     state: present
-     insertbefore: "mesg n"
-     line: 'export KUBECONFIG=$HOME/.kube/config'
+- name: Update .profile
+  lineinfile:
+    dest: "/home/{{ kubeadm.os_user.user }}/.profile"
+    line: 'export KUBECONFIG=$HOME/.kube/admin.conf'
+    insertbefore: "mesg n"
+    state: present
+
+- name: Setup bash-completion
+  shell:
+    cmd: "kubectl completion bash >/etc/bash_completion.d/kubectl"
+    creates: /etc/bash_completion.d/kubectl

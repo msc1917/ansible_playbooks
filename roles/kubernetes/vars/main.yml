@@ -17,9 +17,9 @@ k3s:      { version: 'v1.17.0%2Bk3s.1',
 rke:      { version: 'v1.0.4',
             os_user: { 
               comment: "rke User",
-              user: "kube",
+              user: "rke",
               uid: 1196,
-              group: "kube",
+              group: "rke",
               gid: 1196,
               groups: [ "docker", "sudo-nopwd" ]
               } 

@@ -1,21 +1,4 @@
 ---
-- name: Remove k3s User
-  user:
-    name: "{{ k3s.os_user.user }}"
-    uid: "{{ k3s.os_user.uid }}"
-    state: absent
-
-- name: Remove k3s Group
-  group:
-    name: "{{ k3s.os_user.group }}"
-    gid: "{{ k3s.os_user.gid }}"
-    state: absent
-
-- name: Remove home-directory of user k3s
-  file:
-    path: "/home/{{ k3s.os_user.user }}"
-    state: absent
-
 - name: Check if Service Exists (master)
   stat:
     path: "{{ k3s.systemd_dir }}/k3s-node.service"
@@ -31,7 +14,6 @@
     - k8s_node is defined
     - k8s_node == "node"
     - service_k3s_node.stat.exists
-  # register: service_stopped
 
 - name: Remove K3s service file (node)
   file:
@@ -56,7 +38,6 @@
     - k8s_node is defined
     - k8s_node == "master"
     - service_k3s_master.stat.exists
-  # register: service_stopped
    
 - name: Remove K3s service file (master)
   file:
@@ -66,3 +47,19 @@
     - k8s_node is defined
     - k8s_node == "master"
 
+- name: Remove k3s Group
+  group:
+    name: "{{ k3s.os_user.group }}"
+    gid: "{{ k3s.os_user.gid }}"
+    state: absent
+
+- name: Remove k3s User
+  user:
+    name: "{{ k3s.os_user.user }}"
+    uid: "{{ k3s.os_user.uid }}"
+    state: absent
+
+- name: Remove home-directory of user k3s
+  file:
+    path: "/home/{{ k3s.os_user.user }}"
+    state: absent

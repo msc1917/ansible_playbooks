@@ -63,6 +63,8 @@
 - name: Register IP from master-node
   set_fact: 
     master_ip: "{{ ansible_default_ipv4.address }}"
+    master_serveNet_ip: "{{ serveNet_ip }}"
+  run_once: true
   when:
     - k8s_node is defined
     - k8s_node == "master"

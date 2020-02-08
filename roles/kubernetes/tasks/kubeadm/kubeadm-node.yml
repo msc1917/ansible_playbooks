@@ -1,6 +1,40 @@
 ---
+- name: Register Kubernetes-Token
+  shell:
+    cmd: "kubeadm token list | tail -1 | cut -f 1 -d \" \""
+  changed_when: false
+  run_once: true
+  register: token
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+
+- name: Register Kubernetes SHA-Hash
+  shell:
+    cmd: "openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'"
+  changed_when: false
+  run_once: true
+  register: sha_hash
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+
+- name: Store Kubernetes Token and SHA-Hash
+  set_fact: 
+    kubeadm_token: "{{ token.stdout | regex_replace('\n', '') }}"
+    kubeadm_sha_hash: "{{ sha_hash.stdout | regex_replace('\n', '') }}"
+  run_once: true
+  when:
+    - k8s_node is defined
+    - k8s_node == "master"
+
+# - debug:
+#     msg: "kubeadm join --token {{ kubeadm_token }} --discovery-token-ca-cert-hash sha256:{{ kubeadm_sha_hash }} {{ master_serveNet_ip }}:6443"
+
 - name: Join to Kubernetes cluster
   shell: 
-    cmd: kubeadm join --token {{ kubeadm_token }} --discovery-token-ca-cert-hash {{ kubeadm_sha_hash }} {{ master_ip }}:6443
-    creates: /etc/kubernetes/kubelet.conf
-  when: reset_cluster is succeeded
+    cmd: "kubeadm join --token {{ kubeadm_token }} --discovery-token-ca-cert-hash sha256:{{ kubeadm_sha_hash }} {{ master_serveNet_ip }}:6443"
+    creates: "/etc/kubernetes/kubelet.conf"
+  when:
+    - k8s_node is defined
+    - k8s_node == "node"

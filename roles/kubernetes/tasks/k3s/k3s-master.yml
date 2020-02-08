@@ -4,7 +4,7 @@
   register: k3s_service
   template:
     src: "k3s.service.master.j2"
-    dest: "{{ systemd_dir }}/k3s.service"
+    dest: "{{ k3s.systemd_dir }}/k3s.service"
     owner: root
     group: root
     mode: 0755
@@ -37,7 +37,7 @@
 
 - name: Store Master node-token
   set_fact: 
-   token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
+    token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
 
 - name: Restore node-token file access 
   file:

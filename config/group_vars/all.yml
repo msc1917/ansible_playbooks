@@ -35,7 +35,7 @@ admin_users:
       shell: '/bin/bash' }
 
 ssh_keys:
-  - { user: 'schama', host: 'sojus',   key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@sojus' }
+  - { user: 'schama', host: 'sojus',   key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpb1r0FKLWqUkASTxP1Q6cKy4gNfF4wy13oSywRFvaRKUTr7EKWfevhT2Bkt+ci/JfIzV5HPbu8SvEIY9yfyDgkxAWsIWPe8x8lIZ30PCzkAN8IwqUJKEzSSWDTsMOGozaWgXjmKovseR4BNKxv+2fUVWeoVn3RzujQ8LFItR/v1Be43h3pNsfVkU4XLjrzI4Gh4FiLK0o0h9Yj+YJhw6OZ6mxkj7kznjvDohCjAtZqtvy0X0mizU+YmpGwYTANSF0IGn8XCJpFbiKtvHjAjUnkDchgqjn2orcx5WjKUqtcGyoiTB7fnFz9UfJp0t+5j4d40/QSioG4DW65+6qV8K3 schama@sojus' }
   - { user: 'schama', host: 'control', key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkCsezgRITCez4itrE2oTwdMUURVIkOaCS8iBZ2e4yddvmosWbAPEZEwl/S3w8q9QuI9D3+bY2KHLYrs6jOP4pnW48mDj7KvlHS+/xtFJQ5MGG1VVxwqpRXu0DNshOZFuQUpd1/98Os7T7dGJRLV6oz53biwWoDNRMehD+ly55pnLv94EMRV4rPvL1wKhaN7fX+aE1beQD+OTVMdxDVauT2DGR0pO6ZZ/NPPKNq3A/00ul1sDs+S+4wYINGs5qK4qSL0IEuCZEtwtPItsuTK5BjXskPdelgnD041B2KOl9ToA2hWDxbTjrReSjSHLrWnd5NNUfZ1/mo696I2WxLiwH schama@control' }
 
 revoked_ssh_keys:

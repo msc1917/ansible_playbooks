@@ -20,7 +20,7 @@
   when: 
     - k8s_node is defined
     - serveNet_ip is defined
-    - k8s_node == "node"
+    - k8s_node in [ "master", "node" ]
     - kubernetes_engine == "kubeadm"
 
 - name: Setup kubernetes-user
@@ -29,4 +29,12 @@
     - k8s_node is defined
     - serveNet_ip is defined
     - k8s_node in [ "master", "node" ]
+    - kubernetes_engine == "kubeadm"
+
+- name: Default-Deployments
+  include_tasks: kubeadm/kubeadm-postinstall.yml
+  when: 
+    - k8s_node is defined
+    - serveNet_ip is defined
+    - k8s_node == "master"
     - kubernetes_engine == "kubeadm"
