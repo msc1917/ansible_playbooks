@@ -26,7 +26,9 @@ docker12 serveNet_ip="172.16.1.12" k8s_node="node"
 # worker02
 
 [raspi2_worker]
+jumphost
 [raspi3_worker]
+control
 [raspi4_worker]
 ml1
 ml2

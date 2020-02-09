@@ -166,3 +166,4 @@ dhcp_config:
 do_mount_filesystems: true
 do_software_upgrade: true
 do_nfcDevice: false
+build_full_hostsfile: true

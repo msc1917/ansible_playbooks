@@ -13,7 +13,7 @@
     dest: "/home/{{ kubeadm.os_user.user }}/.kube/admin.conf"
     owner: "{{ kubeadm.os_user.user }}"
     group: "{{ kubeadm.os_user.group }}"
-    mode: '0644'
+    mode: '0755'
 
 - name: Update .profile
   lineinfile:
