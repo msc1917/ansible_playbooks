@@ -6,6 +6,6 @@
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
 {% for host in hostvars | sort %}
-{% if hostvars[host].inventory_hostname != inventory_hostname %}{{ hostvars[host].ansible_default_ipv4.address }}	{{ hostvars[host].inventory_hostname }}	{{ hostvars[host].inventory_hostname }}.{{ vlan.default.domain }}
+{% if hostvars[host].inventory_hostname != inventory_hostname %}{{ hostvars[host].ansible_default_ipv4.address }}	{{ hostvars[host].inventory_hostname }}	{{ hostvars[host].inventory_hostname }}.{{ vlan.default.domain_add }}{{ network.domain }}
 {% endif %}
 {% endfor %}
