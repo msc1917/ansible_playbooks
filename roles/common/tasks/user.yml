@@ -39,6 +39,7 @@
   with_items:
     - pi
     - pirate
+    - jetson
 
 - name: Remove defaut Groups
   group:
@@ -47,6 +48,7 @@
   with_items:
     - pi
     - pirate
+    - jetson
 
 - name: Set SSH-Key for default Admin User
   authorized_key:

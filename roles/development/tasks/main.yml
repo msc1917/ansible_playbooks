@@ -1,18 +1,17 @@
 ---
-- name: Check for user schama
+- name: Check for development-user
   getent: 
     database: passwd 
-    key: schama
-    register: schama_exists
+    key: "{{ default_user.dev_user }}"
+  register: dev_user_exists
+
 - name: Set up system for development
   include_tasks: setup_system.yml
-- name: Set up User schama
-  include_tasks: user_schama.yml
-  become: yes
-  become_user: schama
-  when: schama_exists == true
-- name: Set up GIT-Repositories for schama
+
+- name: Set up development-user
+  include_tasks: adapt_user_development.yml
+  when: not dev_user_exists.failed
+
+- name: Set up GIT-Repositories for development-user
   include_tasks: git_schama.yml
-  become: yes
-  become_user: schama
-  when: schama_exists == true
+  when: not dev_user_exists.failed

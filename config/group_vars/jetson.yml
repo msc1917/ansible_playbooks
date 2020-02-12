@@ -1,0 +1,4 @@
+---
+hardware:
+  wireless_lan: "5ghz"
+  bluetooth: true

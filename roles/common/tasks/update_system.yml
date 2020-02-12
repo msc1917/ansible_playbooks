@@ -23,7 +23,7 @@
 
 - name: Register Keys for Debian Buster
   apt_key:
-    url: https://ftp-master.debian.org/keys/archive-key-10.asc
+    url: {{ item }}
     state: present
   with_items:
     - https://ftp-master.debian.org/keys/archive-key-10-security.asc

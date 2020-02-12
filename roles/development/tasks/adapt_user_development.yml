@@ -1,0 +1,17 @@
+---
+- name: Create directories for Development-User
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ default_user.dev_user }}"
+    mode: "u=rwx,g=rwx,o=rx"
+  with_items:
+   - '/home/{{ default_user.dev_user }}/script'
+   - '/home/{{ default_user.dev_user }}/log'
+   - '/home/{{ default_user.dev_user }}/data'
+   - '/home/{{ default_user.dev_user }}/script/baikonur'
+   - '/home/{{ default_user.dev_user }}/script/itsv'
+   - '/home/{{ default_user.dev_user }}/data/baikonur'
+   - '/home/{{ default_user.dev_user }}/data/itsv'
+   - '/home/{{ default_user.dev_user }}/log/baikonur'
+   - '/home/{{ default_user.dev_user }}/log/itsv'

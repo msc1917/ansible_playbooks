@@ -30,10 +30,14 @@ admin_groups:
 
 admin_users:
   - { name: 'schama',
-      full_name: Martin Schatz',
+      full_name: 'Martin Schatz',
       password: "$6$Bs9brwhwtmUxcza$flnSG.LhQBxF2i5rJ.MCo7.nwkvtArypboTW3z9Nwha7KUETyUYec8gHACsFCzyhTUYK7CegA0MBaOHxtncgL.",
       uid: '1200',
       shell: '/bin/bash' }
+
+default_user:
+  dev_user: schama
+  ml_user: schama
 
 ssh_keys:
   - { user: 'schama', host: 'sojus',   key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCpb1r0FKLWqUkASTxP1Q6cKy4gNfF4wy13oSywRFvaRKUTr7EKWfevhT2Bkt+ci/JfIzV5HPbu8SvEIY9yfyDgkxAWsIWPe8x8lIZ30PCzkAN8IwqUJKEzSSWDTsMOGozaWgXjmKovseR4BNKxv+2fUVWeoVn3RzujQ8LFItR/v1Be43h3pNsfVkU4XLjrzI4Gh4FiLK0o0h9Yj+YJhw6OZ6mxkj7kznjvDohCjAtZqtvy0X0mizU+YmpGwYTANSF0IGn8XCJpFbiKtvHjAjUnkDchgqjn2orcx5WjKUqtcGyoiTB7fnFz9UfJp0t+5j4d40/QSioG4DW65+6qV8K3 schama@sojus' }
@@ -114,6 +118,7 @@ dhcp_config:
   - { mac_address: 'b8:27:eb:1d:92:ab', ip_address: '192.168.96.204', hostname: 'raspi2-2',                 fqhn_domain: 'raspi2-2.lan'               }
   - { mac_address: 'dc:a6:32:51:84:dd', ip_address: '192.168.96.205', hostname: 'ml1',                      fqhn_domain: 'ml1.lan'                    }
   - { mac_address: 'dc:a6:32:6e:0d:9b', ip_address: '192.168.96.206', hostname: 'ml2',                      fqhn_domain: 'ml2.lan'                    }
+  - { mac_address: '00:04:4b:e6:d2:07', ip_address: '192.168.96.207', hostname: 'ml3',                      fqhn_domain: 'ml3.lan'                    }
   - { mac_address: 'b8:27:eb:77:35:b0', ip_address: '192.168.96.208', hostname: 'jumphost',                 fqhn_domain: 'jumphost.lan'               }
   - { mac_address: 'b8:27:eb:73:cc:a6', ip_address: '192.168.96.209', hostname: 'testing',                  fqhn_domain: 'testing.lan'                }
   - { mac_address: 'b8:27:eb:85:11:97', ip_address: '192.168.96.211', hostname: 'docker01',                 fqhn_domain: 'docker01.lan'               }
@@ -153,6 +158,7 @@ dhcp_config:
   - { mac_address: 'b8:27:eb:2c:2b:ca', ip_address: '192.168.97.200', hostname: 'control.wlan',             fqhn_domain: 'control.wlan.'              }
   - { mac_address: 'dc:a6:32:51:84:de', ip_address: '192.168.97.205', hostname: 'ml1.wlan',                 fqhn_domain: 'ml1.wlan.'                  }
   - { mac_address: 'dc:a6:32:6e:0d:9c', ip_address: '192.168.97.206', hostname: 'ml2.wlan',                 fqhn_domain: 'ml2.wlan.'                  }
+  - { mac_address: '24:41:8c:00:6c:e8', ip_address: '192.168.97.207', hostname: 'ml3.wlan',                 fqhn_domain: 'ml3.wlan.'                  }
   - { mac_address: 'b8:27:eb:26:99:f3', ip_address: '192.168.97.209', hostname: 'testing.wlan',             fqhn_domain: 'testing.wlan.'              }
   - { mac_address: 'b8:27:eb:b1:c5:0d', ip_address: '192.168.97.211', hostname: 'docker01.wlan',            fqhn_domain: 'docker01.wlan.'             }
   - { mac_address: 'b8:27:eb:92:f3:26', ip_address: '192.168.97.212', hostname: 'docker02.wlan',            fqhn_domain: 'docker02.wlan.'             }
@@ -182,9 +188,13 @@ dns_config:
                                         'docker09',
                                         'docker10',
                                         'docker11',
-                                        'docker12'  ]      }
+                                        'docker12'  ]       }
+  - { hostname: 'ml1.',    forwarded: [ 'ml1', 'ml1.wlan' ] }
+  - { hostname: 'ml2.',    forwarded: [ 'ml2', 'ml2.wlan' ] }
+  - { hostname: 'ml3.',    forwarded: [ 'ml3', 'ml3.wlan' ] }
 
 do_mount_filesystems: true
 do_software_upgrade: true
 do_nfcDevice: false
+do_git: true
 build_full_hostsfile: true

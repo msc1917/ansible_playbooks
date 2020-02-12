@@ -43,7 +43,7 @@
 
 - name: Generiere /etc/avahi/services/sftp-ssh.services
   template:
-    src: "avahi/ssh.services.j2"
+    src: "avahi/ssh.service.j2"
     dest: "/etc/avahi/services/ssh.services"
     owner: root
     group: root
@@ -52,7 +52,7 @@
 
 - name: Generiere /etc/avahi/services/sftp-ssh.services
   template:
-    src: "avahi/sftp-ssh.services.j2"
+    src: "avahi/sftp-ssh.service.j2"
     dest: "/etc/avahi/services/sftp-ssh.services"
     owner: root
     group: root
@@ -62,13 +62,13 @@
 - name: Check if Avahi-Service exists 
   stat:
     path: "/etc/systemd/system/multi-user.target.wants/avahi-daemon.service"
-  when: service_avahi
+  register: service_avahi
 
 - name: Restart avahi-daemon when services changed
   systemd:
     name: avahi-daemon
     daemon_reload: yes
-    state: restart
+    state: restarted
     enabled: yes
   when:
     - ( avahi_ssh.changed or avahi_sftp.changed )

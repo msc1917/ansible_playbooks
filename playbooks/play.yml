@@ -3,6 +3,10 @@
   roles:
     - role: common
 
-# - hosts: docker
-#   roles:
-#     - role: docker
+- hosts: worker
+  roles:
+    - role: development
+
+- hosts: worker
+  roles:
+    - role: machinelearning

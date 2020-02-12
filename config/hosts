@@ -32,6 +32,8 @@ control
 [raspi4_worker]
 ml1
 ml2
+[jetson_worker]
+ml3
 
 [docker_x86]
 [kubernetes_x86]
@@ -78,3 +80,13 @@ raspi3_kubernetes
 raspi4_worker
 raspi4_docker
 raspi4_kubernetes
+
+[jetson:children]
+jetson_worker
+
+[worker:children]
+raspi1_worker
+raspi2_worker
+raspi3_worker
+raspi4_worker
+jetson_worker

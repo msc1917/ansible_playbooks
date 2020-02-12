@@ -1,14 +1,57 @@
 ---
-- hosts: development
-  tasks:
-  - name: Set up personal GIT-Repository
-    git:
-    repo: 'https://msc1917@bitbucket.org/msc1917/privatecode.git'
-    dest: /home/schama/script/private
+- name: Copy Key-File for Git-Repository
+  copy:
+    src: "{{ role_path }}/files/id_rsa.git"
+    dest: "/home/{{ default_user.dev_user }}/.ssh/id_rsa.git"
+    owner: "{{ default_user.dev_user }}"
+    group: "{{ default_user.dev_user }}"
+    mode: '0600'
+
+- name: Copy Public Key-File for Git-Repository
+  copy:
+    src: "{{ role_path }}/files/id_rsa.git.pub"
+    dest: "/home/{{ default_user.dev_user }}/.ssh/id_rsa.git.pub"
+    owner: "{{ default_user.dev_user }}"
+    group: "{{ default_user.dev_user }}"
+    mode: '0644'
+
+- git_config:
+    name: user.name
+    scope: global
+    value: '{{ git_user.name }}'
+  become_user: "{{ default_user.dev_user }}"
+
+- git_config:
+    name: user.email
+    scope: global
+    value: '{{ git_user.email }}'
+  become_user: "{{ default_user.dev_user }}"
+
+- name: Set up personal GIT-Repository
+  # environment:
+  #   TMPDIR: "/home/{{ default_user.dev_user }}/tmp"
+  git:
+    # repo: 'https://msc1917@bitbucket.org/msc1917/privatecode.git'
+    repo: 'git@bitbucket.org:msc1917/privatecode.git'
+    dest: /home/{{ default_user.dev_user }}/script/baikonur
     version: development
+    accept_hostkey: yes
+    key_file: "/home/{{ default_user.dev_user }}/.ssh/id_rsa.git"
     update: no
-  - name: Set up work GIT-Repository
-    git:
-    repo: 'https://msc1917@bitbucket.org/msc1917/workcode.git'
-    dest: /home/schama/script/work
+  become: yes
+  become_user: "{{ default_user.dev_user }}"
+  when: do_git
+
+- name: Set up work GIT-Repository
+  # environment:
+  #   TMPDIR: "/home/{{ default_user.dev_user }}/tmp"
+  git:
+    # repo: 'https://msc1917@bitbucket.org/msc1917/workcode.git'
+    repo: 'git@bitbucket.org:msc1917/workcode.git'
+    dest: /home/{{ default_user.dev_user }}/script/itsv
+    accept_hostkey: yes
+    key_file: "/home/{{ default_user.dev_user }}/.ssh/id_rsa.git"
     update: no
+  become: yes
+  become_user: "{{ default_user.dev_user }}"
+  when: do_git
