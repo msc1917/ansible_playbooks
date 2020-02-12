@@ -9,6 +9,9 @@
 - name: Set up system for development
   include_tasks: setup_system.yml
 
+- name: Set up system for ansible
+  include_tasks: setup_ansible.yml
+
 - name: Set up development-user
   include_tasks: adapt_user_development.yml
   when: not dev_user_exists.failed

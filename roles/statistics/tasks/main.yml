@@ -1,6 +1,6 @@
 ---
 - name: Write facts to files
   copy: 
-    content: "{{ vars }}"
+    content: "{{ ansible_facts }}"
     dest: "{{ playbook_dir }}/../facts/facts_{{ ansible_hostname }}.json"
   delegate_to: localhost
