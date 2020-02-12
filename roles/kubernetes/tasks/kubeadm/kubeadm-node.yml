@@ -5,6 +5,7 @@
   changed_when: false
   run_once: true
   register: token
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node == "master"
@@ -15,6 +16,7 @@
   changed_when: false
   run_once: true
   register: sha_hash
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node == "master"
@@ -24,6 +26,7 @@
     kubeadm_token: "{{ token.stdout | regex_replace('\n', '') }}"
     kubeadm_sha_hash: "{{ sha_hash.stdout | regex_replace('\n', '') }}"
   run_once: true
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node == "master"
@@ -35,6 +38,7 @@
   shell: 
     cmd: "kubeadm join --token {{ kubeadm_token }} --discovery-token-ca-cert-hash sha256:{{ kubeadm_sha_hash }} {{ master_serveNet_ip }}:6443"
     creates: "/etc/kubernetes/kubelet.conf"
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node == "node"

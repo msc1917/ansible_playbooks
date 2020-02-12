@@ -6,6 +6,7 @@
       remote_src: yes 
   run_once: true
   delegate_to: localhost
+  become: yes
   with_items: 
     - https://get.helm.sh/helm-{{ helm_version }}-linux-amd64.tar.gz
     - https://get.helm.sh/helm-{{ helm_version }}-linux-arm.tar.gz
@@ -15,6 +16,7 @@
   shell: command -v helm >/dev/null 2>&1
   register: helm_exists
   ignore_errors: yes
+  become: yes
 
 - name: Copy binary x64 to host
   copy:
@@ -23,6 +25,7 @@
       owner: root
       group: root
       mode: '0755'
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node in [ "master", "node" ]
@@ -37,6 +40,7 @@
       owner: root
       group: root
       mode: '0755'
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node in [ "master", "node" ]
@@ -51,6 +55,7 @@
       owner: root
       group: root
       mode: '0755'
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node in [ "master", "node" ]

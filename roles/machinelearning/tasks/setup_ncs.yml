@@ -3,8 +3,9 @@
   file:
     path: "{{ item }}"
     state: directory
-    owner: {{ default_user.ml_user }}
+    owner: "{{ default_user.ml_user }}"
     mode: "u=rwx,g=rwx,o=rx"
+  become: yes
   with_items:
    - '/home/{{ default_user.ml_user }}/script/ml/ncs2'
    - '/home/{{ default_user.ml_user }}/script/ml/movidius'
@@ -12,8 +13,9 @@
 
 - name: Register Keys for openVino-toolkit
   apt_key:
-    url: {{ item }}
+    url: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - https://apt.repos.intel.com/openvino/2020/GPG-PUB-KEY-INTEL-OPENVINO-2020?elq_cid=3419844&erpm_id=6156683&elq_cid=3419844&erpm_id=6156683
   when: 
@@ -23,6 +25,7 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - deb https://apt.repos.intel.com/openvino/2020 all main
   when: 
@@ -30,20 +33,21 @@
 
 - name: Install openVino-toolkit
   apt:
-    name: [ 'intel-openvino-dev-ubuntu18-2020.1.023' ]
+    name: [ 'intel-openvino-ie-rt-raspbian-stretch-{{ openvino_version }}' ]
     state: present
     update_cache: no
+  become: yes
 
 - name: Set up GIT-Repository for Intel Neural Compute Stick (ncappzoo)
   git:
     repo: 'http://github.com/movidius/ncappzoo'
     dest: /home/{{ default_user.ml_user }}/script/ml/movidius/ncappzoo
     update: no
-  become_user: {{ default_user.ml_user }}
+  become_user: "{{ default_user.ml_user }}"
 
 - name: Set up GIT-Repository for Intel Neural Compute Stick (ncsdk)
   git:
     repo: 'http://github.com/movidius/ncsdk'
     dest: /home/{{ default_user.ml_user }}/script/ml/movidius/ncsdk
     update: no
-  become_user: {{ default_user.ml_user }}
+  become_user: "{{ default_user.ml_user }}"

@@ -1,0 +1,11 @@
+---
+- name: Update .profile
+  lineinfile:
+    dest: "/home/{{ default_user.dev_user }}/.profile"
+    line: 'export ANSIBLE_CONFIG=/home/{{ default_user.dev_user }}/script/baikonur/Ansible/config/ansible.cfg'
+    insertbefore: "# set PATH so it includes user's private bin if it exists"
+    state: present
+  become: yes
+  when:
+    - do_ansible is defined
+    - do_ansible

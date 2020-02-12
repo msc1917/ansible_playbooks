@@ -3,6 +3,7 @@
   getent: 
     database: passwd 
     key: "{{ default_user.dev_user }}"
+  become: yes
   register: dev_user_exists
 
 - name: Set up system for development

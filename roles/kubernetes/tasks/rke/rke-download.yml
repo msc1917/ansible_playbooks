@@ -2,6 +2,7 @@
 - name: Downloading newest rke binaries locally
   local_action: get_url url={{ item }} dest={{ role_path }}/files
   run_once: true
+  become: yes
   with_items: 
     - https://github.com/rancher/rke/releases/download/{{ rke.version }}/rke_linux-amd64
     - https://github.com/rancher/rke/releases/download/{{ rke.version }}/rke_linux-arm64
@@ -14,6 +15,7 @@
       owner: {{ rke.os_user.user }}
       group: {{ rke.os_user.group }}
       mode: 755
+  become: yes
   when:
     - ansible_facts.architecture == "x86_64"
     - k8s_node is defined
@@ -26,6 +28,7 @@
       owner: {{ rke.os_user.user }}
       group: {{ rke.os_user.group }}
       mode: 755
+  become: yes
   when:
     - ansible_facts.architecture is search("aarch64")
     # - ansible_facts.userspace_bits == "64"
@@ -39,6 +42,7 @@
       owner: {{ rke.os_user.user }}
       group: {{ rke.os_user.group }}
       mode: 755
+  become: yes
   when:
     - ansible_facts.architecture is search("arm")
     - ansible_facts.userspace_bits == "32"

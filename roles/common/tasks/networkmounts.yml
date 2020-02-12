@@ -4,6 +4,7 @@
     name: [ cifs-utils, nfs-common ]
     state: present
     update_cache: no
+  become: yes
 
 - name: Unmount remote-filesystem
   mount:
@@ -12,6 +13,7 @@
     fstype: "{{ item.type }}"
     opts: "{{ item.options }}"
     state: unmounted
+  become: yes
   when: do_mount_filesystems
   ignore_errors: yes
   with_items:
@@ -24,6 +26,7 @@
     owner: root
     group: root
     mode: 0755
+  become: yes
   when: do_mount_filesystems
   with_items:
     - "{{ mount_filesystems }}"
@@ -35,6 +38,7 @@
     fstype: "{{ item.type }}"
     opts: "{{ item.options }}"
     state: present
+  become: yes
   when: do_mount_filesystems
   ignore_errors: yes
   with_items:

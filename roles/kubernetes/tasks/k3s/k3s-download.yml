@@ -2,6 +2,7 @@
 - name: Downloading newest k3s binaries locally
   local_action: get_url url={{ item }} dest={{ role_path }}/files
   run_once: true
+  become: yes
   with_items: 
     - https://github.com/rancher/k3s/releases/download/{{ k3s.version }}/k3s
     - https://github.com/rancher/k3s/releases/download/{{ k3s.version }}/k3s-arm64
@@ -11,6 +12,7 @@
   file:
       path: /usr/local/bin/k3s
       state: absent
+  become: yes
 
 - name: Copy k3s binary x64
   copy:
@@ -19,6 +21,7 @@
       owner: root
       group: root
       mode: 755
+  become: yes
   when: 
     - ansible_facts.architecture == "x86_64"
     - k8s_node is defined
@@ -30,6 +33,7 @@
       owner: root
       group: root
       mode: 755
+  become: yes
   when:
     - ansible_facts.architecture is search("aarch64")
     # - ansible_facts.architecture is search("arm")
@@ -43,6 +47,7 @@
       owner: root
       group: root
       mode: 755
+  become: yes
   when: 
     - ansible_facts.architecture is search("arm")
     - ansible_facts.userspace_bits == "32"

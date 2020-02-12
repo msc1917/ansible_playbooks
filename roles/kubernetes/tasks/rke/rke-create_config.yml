@@ -7,6 +7,7 @@
     owner: rke
     group: rke
     mode: '0644'
+  become: yes
   when:
     - k8s_node is defined
     - k8s_node == "master"

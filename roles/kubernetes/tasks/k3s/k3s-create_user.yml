@@ -4,6 +4,7 @@
     name: {{ k3s.os_user.group }}
     gid: {{ k3s.os_user.gid }}
     state: present
+  become: yes
 
 - name: Create k3s User
   user:
@@ -17,17 +18,20 @@
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
     state: present
+  become: yes
 
 - name: Collect public keys of k3s-users 
   shell: "cat /home/{{ k3s.os_user.user }}/.ssh/id_rsa.pub"
   changed_when: False
   register: ssh_public_key
+  become: yes
 
 - name: Set SSH-Key for default Admin User
   authorized_key:
     user: {{ k3s.os_user.user }}
     key: "{{ item.key }}"
     state: present
+  become: yes
   with_items:
     - "{{ ssh_keys }}"
   when: item.user in kubernetes_ssh_keys
@@ -38,6 +42,7 @@
     key: "{{ item[2] }}"
     state: present
   delegate_to: "{{ item[0] }}"
+  become: yes
   with_nested:
     - "{{groups['kubernetes']}}"
     - "{{ k3s.os_user.user }}"

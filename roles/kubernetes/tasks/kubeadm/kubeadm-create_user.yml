@@ -4,6 +4,7 @@
     name: "{{ kubeadm.os_user.group }}"
     gid: "{{ kubeadm.os_user.gid }}"
     state: present
+  become: yes
 
 - name: Create kubeadm User
   user:
@@ -17,10 +18,12 @@
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
     state: present
+  become: yes
 
 - name: Collect public keys of kubeadm-users 
   shell: "cat /home/{{ kubeadm.os_user.user }}/.ssh/id_rsa.pub"
   changed_when: False
+  become: yes
   register: ssh_public_key
 
 - name: Set SSH-Key for default Admin User
@@ -28,6 +31,7 @@
     user: "{{ kubeadm.os_user.user }}"
     key: "{{ item.key }}"
     state: present
+  become: yes
   with_items:
     - "{{ ssh_keys }}"
   when: item.user in kubernetes_ssh_keys
@@ -39,6 +43,7 @@
     state: present
   delegate_to: "{{ item[0] }}"
   ignore_errors: yes
+  become: yes
   with_nested:
     - "{{groups['kubernetes']}}"
     - "{{ kubeadm.os_user.user }}"

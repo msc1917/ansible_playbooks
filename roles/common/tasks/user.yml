@@ -4,6 +4,7 @@
     name: "{{ item.name }}"
     gid: "{{ item.uid }}"
     state: present
+  become: yes
   with_items:
     - "{{ admin_users }}"
     - { name: "sudo-nopwd", uid: "1199" }
@@ -15,6 +16,7 @@
     insertafter: '^%sudo'
     line: '%sudo-nopwd ALL=(ALL) NOPASSWD: ALL'
     validate: '/usr/sbin/visudo -cf %s'
+  become: yes
 
 - name: Create defaut User
   user:
@@ -29,6 +31,7 @@
     ssh_key_bits: 2048
     ssh_key_file: .ssh/id_rsa
     state: present
+  become: yes
   with_items:
     - "{{ admin_users }}"
 
@@ -36,6 +39,7 @@
   user:
     name: "{{ item }}"
     state: absent
+  become: yes
   with_items:
     - pi
     - pirate
@@ -45,6 +49,7 @@
   group:
     name: "{{ item }}"
     state: absent
+  become: yes
   with_items:
     - pi
     - pirate
@@ -55,5 +60,6 @@
     user: "{{ item.user }}"
     key: "{{ item.key }}"
     state: present
+  become: yes
   with_items:
     - "{{ ssh_keys }}"

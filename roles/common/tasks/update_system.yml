@@ -3,6 +3,7 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi firmware
     - deb http://archive.raspberrypi.org/debian/ stretch main ui
@@ -14,6 +15,7 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - deb http://mirrordirector.raspbian.org/raspbian/ stable main contrib non-free rpi firmware
     - deb http://archive.raspberrypi.org/debian/ stretch main ui
@@ -23,8 +25,9 @@
 
 - name: Register Keys for Debian Buster
   apt_key:
-    url: {{ item }}
+    url: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - https://ftp-master.debian.org/keys/archive-key-10-security.asc
     - https://ftp-master.debian.org/keys/archive-key-10.asc
@@ -37,9 +40,11 @@
     name: [ 'vlan', 'debian-keyring', 'debian-archive-keyring', 'debian-ports-archive-keyring' ]
     state: present
     update_cache: yes
+  become: yes
 
 - name: Deinstall Packages
   apt:
     name: [ 'cloud-init' ]
     state: absent 
     update_cache: no
+  become: yes

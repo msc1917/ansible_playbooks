@@ -10,3 +10,11 @@
 - hosts: worker
   roles:
     - role: machinelearning
+
+- hosts: kubernetes
+  roles:
+    - role: kubernetes
+
+- hosts: all
+  roles:
+    - role: statistics

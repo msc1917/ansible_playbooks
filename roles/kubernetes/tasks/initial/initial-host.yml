@@ -5,6 +5,7 @@
     regexp: '^arm_64bit'
     insertafter: '# Additional overlays and parameters are documented /boot/overlays/README'
     line: arm_64bit=1
+  become: yes
   when:
     - ansible_facts.architecture is search("arm")
     - ansible_facts.userspace_bits == "32"
@@ -12,6 +13,7 @@
 - name: Test for Raspbian
   stat:
     path: /boot/cmdline.txt
+  become: yes
   register: cmdline
 
 - name: Activating cgroup on Raspbian
@@ -20,6 +22,7 @@
     regexp: '^(.*rootwait)$'
     line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
     backrefs: true
+  become: yes
   when: ( cmdline.stat.path is defined )
           and
         ( ansible_facts.architecture is search("arm") )
@@ -28,6 +31,7 @@
 - name: Set SELinux to disabled state
   selinux:
     state: disabled
+  become: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Enable IPv4 forwarding
@@ -36,6 +40,7 @@
     value: "1"
     state: present
     reload: yes
+  become: yes
 
 - name: Enable IPv6 forwarding
   sysctl:
@@ -43,6 +48,7 @@
     value: "1"
     state: present
     reload: yes
+  become: yes
 
 - name: Set bridge-nf-call-iptables
   sysctl:
@@ -50,6 +56,7 @@
     value: "1"
     state: present
     reload: yes
+  become: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Set bridge-nf-call-ip6tables
@@ -58,12 +65,14 @@
     value: "1"
     state: present
     reload: yes
+  become: yes
   when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Register IP from master-node
   set_fact: 
     master_ip: "{{ ansible_default_ipv4.address }}"
     master_serveNet_ip: "{{ serveNet_ip }}"
+  become: yes
   run_once: true
   when:
     - k8s_node is defined
@@ -71,4 +80,5 @@
 
 - name: Rebooting on Raspbian 
   reboot:
+  become: yes
   when: boot_cmdline is changed

@@ -3,6 +3,7 @@
   apt_key:
     url: "{{ item }}"
     state: present
+  become: yes
   with_items:
     - https://packages.cloud.google.com/apt/doc/apt-key.gpg
   when: 
@@ -24,6 +25,7 @@
     repo: "{{ item }}"
     state: present
     update_cache: no
+  become: yes
   with_items:
     - deb https://apt.kubernetes.io/ kubernetes-xenial main
   when: 
@@ -35,3 +37,4 @@
     name: [ 'kubeadm' ]
     state: present
     update_cache: no
+  become: yes

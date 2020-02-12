@@ -6,6 +6,7 @@
     group: "{{ kubeadm.os_user.group }}"
     mode: '0755'
     state: directory
+  become: yes
 
 - name: Copy admin.conf to Home directory
   copy:
@@ -14,6 +15,7 @@
     owner: "{{ kubeadm.os_user.user }}"
     group: "{{ kubeadm.os_user.group }}"
     mode: '0755'
+  become: yes
 
 - name: Update .profile
   lineinfile:
@@ -21,8 +23,10 @@
     line: 'export KUBECONFIG=$HOME/.kube/admin.conf'
     insertbefore: "mesg n"
     state: present
+  become: yes
 
 - name: Setup bash-completion
   shell:
     cmd: "kubectl completion bash >/etc/bash_completion.d/kubectl"
     creates: /etc/bash_completion.d/kubectl
+  become: yes
