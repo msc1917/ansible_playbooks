@@ -5,3 +5,8 @@
     state: present
     update_cache: no
   become: yes
+  when:
+    - do_get_git_repositories is defined
+    - do_git is defined
+    - do_get_git_repositories
+    - do_git

@@ -198,3 +198,4 @@ do_software_upgrade: true
 do_nfcDevice: false
 do_git: true
 build_full_hostsfile: true
+do_get_git_repositories: true

@@ -15,3 +15,8 @@
    - '/home/{{ default_user.dev_user }}/data/itsv'
    - '/home/{{ default_user.dev_user }}/log/baikonur'
    - '/home/{{ default_user.dev_user }}/log/itsv'
+  when:
+   - do_get_git_repositories is defined
+   - do_git is defined
+   - do_get_git_repositories
+   - do_git
