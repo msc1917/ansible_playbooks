@@ -10,4 +10,5 @@ Einrichten der Hosts für Machinelearning-Tools (Google Coral, Intel NCS und nvi
 * meta: Meta-Daten für die Rolle
 * defaults: Standard-Variablen für die Rolle (werden von anderen Variabledefinitionen übersteuert)
 * vars: Weitere Variablen für die Rolle
+* files: Files, welche von der Rolle benötigt werden könnten
 * templates: Jinja2-Templates, welche von der Rolle benötigt werden könnten

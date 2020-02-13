@@ -6,3 +6,6 @@ Einrichten des Kubernetes-Clusters (master und node) via k3s, rke, kubeadm oder 
 
 ## Verzeichnis "files"
 Files, welche von der Rolle benötigt werden könnten
+
+## Files:
+* kubeadm/rbac-config.yml:

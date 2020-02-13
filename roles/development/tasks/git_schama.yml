@@ -57,3 +57,14 @@
   become: yes
   become_user: "{{ default_user.dev_user }}"
   when: do_git
+
+  - name: Update .profile with PYTHONPATH
+  lineinfile:
+    dest: "/home/{{ default_user.dev_user }}/.profile"
+    line: 'export PYTHONPATH=/home/{{ default_user.dev_user }}/script/baikonur/python/modules:/home/{{ default_user.dev_user }}/scripts/itsv/functions/modules:$PYTHONPATH'
+    insertafter: "EOF"
+    regexp: '^export PYTHONPATH=' 
+    state: present
+  become: yes
+  when:
+    - do_git

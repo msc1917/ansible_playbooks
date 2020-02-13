@@ -9,7 +9,7 @@ Playbook-Tasks, welche in der Rolle durchgeführt werden
 
 ## Files:
 * main.yml:
-* setup_coral.yml: Setup Google Coral
-* setup_ncs.yml: Setup Intel Neural Compute Stick
-* setup_jetpack.yml: Setup nVidia Jetpack
-* setup_default.yml:
+* setup_coral.yml: Setup für Google Coral
+* setup_ncs.yml: Setup für Intel Neural Compute Stick
+* setup_jetpack.yml: Setup für nVidia Jetpack
+* setup_default.yml: Standard-Einrichtungen für Machine-Learning
