@@ -1,3 +1,0 @@
----
-do_mount_filesystems: false
-do_get_git_repositories: false

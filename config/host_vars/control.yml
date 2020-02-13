@@ -1,4 +1,0 @@
-build_full_hostsfile: true
-no_hostfile: true
-do_git: false
-do_ansible: true

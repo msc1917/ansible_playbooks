@@ -1,8 +1,0 @@
----
-- hosts: worker
-  roles:
-    - role: development
-
-- hosts: worker
-  roles:
-    - role: machinelearning
