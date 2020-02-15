@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: linux
   roles:
     - role: common
 
@@ -15,6 +15,6 @@
   roles:
     - role: kubernetes
 
-- hosts: all
+- hosts: linux
   roles:
     - role: statistics
