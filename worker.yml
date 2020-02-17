@@ -1,8 +1,8 @@
 ---
-- hosts: worker
+- hosts: all_development
   roles:
     - role: development
 
-- hosts: worker
+- hosts: all_machinelearning
   roles:
     - role: machinelearning

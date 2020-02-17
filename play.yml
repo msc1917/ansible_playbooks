@@ -3,17 +3,25 @@
   roles:
     - role: common
 
-- hosts: worker
+- hosts: all_development
   roles:
     - role: development
 
-- hosts: worker
+- hosts: all_jumphost
+  roles:
+    - role: jumphost
+
+- hosts: all_machinelearning
   roles:
     - role: machinelearning
 
-- hosts: kubernetes
+- hosts: all_kubernetes
   roles:
     - role: kubernetes
+
+- hosts: linux
+  roles:
+    - role: services
 
 - hosts: linux
   roles:
