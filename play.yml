@@ -1,27 +1,39 @@
 ---
 - hosts: linux
   roles:
-    - role: common
-
-- hosts: all_development
-  roles:
-    - role: development
-
-- hosts: all_jumphost
-  roles:
-    - role: jumphost
-
-- hosts: all_machinelearning
-  roles:
-    - role: machinelearning
-
-- hosts: all_kubernetes
-  roles:
-    - role: kubernetes
+    - role: initial_01_basesetup
 
 - hosts: linux
   roles:
-    - role: services
+    - role: initial_02_services
+
+- hosts: linux
+  roles:
+    - role: initial_03_hardware
+
+- hosts: linux
+  roles:
+    - role: initial_04_baseusers
+
+- hosts: linux
+  roles:
+    - role: initial_05_network
+
+- hosts: all_development
+  roles:
+    - role: host_development
+
+- hosts: all_jumphost
+  roles:
+    - role: host_jumphost
+
+- hosts: all_machinelearning
+  roles:
+    - role: host_machinelearning
+
+- hosts: all_kubernetes
+  roles:
+    - role: host_kubernetes
 
 - hosts: linux
   roles:

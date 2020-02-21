@@ -1,4 +1,4 @@
 ---
 - hosts: all_machinelearning
   roles:
-    - role: machinelearning
+    - role: host_machinelearning

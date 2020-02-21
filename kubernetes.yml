@@ -1,4 +1,4 @@
 ---
 - hosts: all_kubernetes
   roles:
-    - role: kubernetes
+    - role: host_kubernetes
