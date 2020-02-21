@@ -1,4 +1,4 @@
 ---
 - hosts: all_kubernetes
   roles:
-    - role: host_kubernetes
+    - role: kube_kubernetes_install
