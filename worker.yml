@@ -1,0 +1,8 @@
+---
+- hosts: all_development
+  roles:
+    - role: host_development
+
+- hosts: all_machinelearning
+  roles:
+    - role: host_machinelearning

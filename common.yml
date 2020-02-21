@@ -1,0 +1,20 @@
+---
+- hosts: linux
+  roles:
+    - role: initial_01_basesetup
+
+- hosts: linux
+  roles:
+    - role: initial_02_services
+
+- hosts: linux
+  roles:
+    - role: initial_03_hardware
+
+- hosts: linux
+  roles:
+    - role: initial_04_baseusers
+
+- hosts: linux
+  roles:
+    - role: initial_05_network

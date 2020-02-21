@@ -1,0 +1,40 @@
+---
+- hosts: linux
+  roles:
+    - role: initial_01_basesetup
+
+- hosts: linux
+  roles:
+    - role: initial_02_services
+
+- hosts: linux
+  roles:
+    - role: initial_03_hardware
+
+- hosts: linux
+  roles:
+    - role: initial_04_baseusers
+
+- hosts: linux
+  roles:
+    - role: initial_05_network
+
+- hosts: all_development
+  roles:
+    - role: host_development
+
+- hosts: all_jumphost
+  roles:
+    - role: host_jumphost
+
+- hosts: all_machinelearning
+  roles:
+    - role: host_machinelearning
+
+- hosts: all_kubernetes
+  roles:
+    - role: kube_kubernetes_install
+
+- hosts: linux
+  roles:
+    - role: statistics

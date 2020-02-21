@@ -1,0 +1,4 @@
+---
+- hosts: observer
+  roles:
+    - role: host_security
