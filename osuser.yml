@@ -1,5 +1,4 @@
 ---
 - hosts: linux
-  gather_facts: no
   roles:
     - role: initial_04_baseusers

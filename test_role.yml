@@ -1,4 +1,5 @@
 ---
 - hosts: linux
+  gather_facts: no
   roles:
     - role: test_role
