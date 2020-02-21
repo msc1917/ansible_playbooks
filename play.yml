@@ -21,19 +21,23 @@
 
 - hosts: all_development
   roles:
-    - role: host_development
-
-- hosts: all_jumphost
-  roles:
-    - role: host_jumphost
+    - role: host_02_development
 
 - hosts: all_machinelearning
   roles:
-    - role: host_machinelearning
+    - role: host_03_machinelearning
+
+- hosts: all_jumphost
+  roles:
+    - role: host_04_jumphost
 
 - hosts: all_kubernetes
   roles:
-    - role: kube_kubernetes_install
+    - role: kube_01_kubernetes_install
+
+- hosts: all_kubernetes
+  roles:
+    - role: kube_02_skubernetes_postinstall
 
 - hosts: linux
   roles:

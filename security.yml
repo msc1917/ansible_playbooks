@@ -1,4 +1,4 @@
 ---
 - hosts: observer
   roles:
-    - role: host_security
+    - role: host_05_security
