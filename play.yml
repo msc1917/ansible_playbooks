@@ -2,21 +2,9 @@
 - hosts: linux
   roles:
     - role: initial_01_basesetup
-
-- hosts: linux
-  roles:
     - role: initial_02_services
-
-- hosts: linux
-  roles:
     - role: initial_03_hardware
-
-- hosts: linux
-  roles:
     - role: initial_04_baseusers
-
-- hosts: linux
-  roles:
     - role: initial_05_network
 
 - hosts: all_development
@@ -34,10 +22,7 @@
 - hosts: all_kubernetes
   roles:
     - role: kube_01_kubernetes_install
-
-- hosts: all_kubernetes
-  roles:
-    - role: kube_02_skubernetes_postinstall
+    - role: kube_02_kubernetes_postinstall
 
 - hosts: linux
   roles:
