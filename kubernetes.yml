@@ -1,5 +1,7 @@
 ---
 - hosts: all_kubernetes
   roles:
+    - role: setenv_01_local
     - role: kube_01_kubernetes_install
     - role: kube_02_kubernetes_postinstall
+    - role: setenv_02_statistics
