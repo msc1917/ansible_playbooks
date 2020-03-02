@@ -1,0 +1,17 @@
+---
+- hosts: all_jumphost
+  gather_facts: yes
+  tasks:
+  - name: Include vars from role initial_02_services
+    include_vars:
+      file: "/home/schama/script/ansible/roles/initial_02_services/vars/main.yml"
+
+  - name: Generiere dhcpd.conf-file
+    template:
+      src: "/home/schama/script/ansible/roles/initial_02_services/templates/dhcp/dhcpd.conf.j2"
+      dest: "/home/schama/script/ansible/config/dynamic_vars/files/config/dhcp/dhcpd.conf"
+      mode: '0644'
+    run_once: true
+    delegate_to: localhost
+    become: no
+    ignore_errors: yes
