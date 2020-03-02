@@ -1,0 +1,50 @@
+---
+- hosts: all_jumphost
+  gather_facts: yes
+  tasks:
+  - name: Include vars from role initial_02_services
+    include_vars:
+      file: "/home/schama/script/ansible/roles/initial_02_services/vars/main.yml"
+
+  # - name: Generiere Domain-Liste
+  #   template:
+  #     src: "/home/schama/script/ansible/roles/initial_02_services/templates/dns/domain.list.j2"
+  #     dest: "/home/schama/script/ansible/config/dynamic_vars/files/config/dns/domain.list"
+  #     mode: '0644'
+  #   run_once: true
+  #   delegate_to: localhost
+  #   become: no
+
+  - name: Generiere domain.zone-Files
+    template:
+      src: "/home/schama/script/ansible/roles/initial_02_services/templates/dns/domain.zone.j2"
+      dest: "/home/schama/script/ansible/config/dynamic_vars/files/config/dns/zone-file/{{ item.domain }}.zone"
+      mode: '0644'
+    run_once: true
+    delegate_to: localhost
+    become: no
+    ignore_errors: yes
+    with_items:
+      - "{{ domain_files }}"
+
+  - name: Generiere Reverse-Domain.zone-Files ([...].in-addr.arpa.zone)
+    template:
+      src: "/home/schama/script/ansible/roles/initial_02_services/templates/dns/in-addr.arpa.zone.j2"
+      dest: "/home/schama/script/ansible/config/dynamic_vars/files/config/dns/zone-file/{{ item }}.in-addr.arpa.zone"
+      mode: '0644'
+    run_once: true
+    delegate_to: localhost
+    become: no
+    ignore_errors: yes
+    with_items: 
+      - "{{ reverse_domain_files }}"
+
+  - name: Generiere named.conf-File
+    template:
+      src: "/home/schama/script/ansible/roles/initial_02_services/templates/dns/named.conf.j2"
+      dest: "/home/schama/script/ansible/config/dynamic_vars/files/config/dns/named.conf"
+      mode: '0644'
+    run_once: true
+    delegate_to: localhost
+    become: no
+    ignore_errors: yes
