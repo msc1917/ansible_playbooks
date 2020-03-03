@@ -1,0 +1,13 @@
+---
+- hosts: all_jumphost
+  gather_facts: yes
+  tasks:
+  - name: Generate host-overview
+    template:
+      src: "/home/schama/script/ansible/roles/setenv_02_statistics/templates/network.yml.j2"
+      dest: "/home/schama/script/ansible/facts/network.{{ network.domain }}.yml"
+      mode: '0644'
+    delegate_to: localhost
+    run_once: true
+    become: no
+    changed_when: false
