@@ -1,4 +1,4 @@
 ---
-- hosts: observer
+- hosts: observer01.baikonur.at
   roles:
     - role: host_05_security
