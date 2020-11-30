@@ -1,4 +1,4 @@
 ---
 - hosts: linux
   roles:
-    - role: initial_01_basesetup
+    - role: initial_basesetup

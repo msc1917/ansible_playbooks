@@ -1,4 +1,4 @@
 ---
 - hosts: linux
   roles:
-    - role: setenv_02_statistics
+    - role: setenv_statistics
