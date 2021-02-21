@@ -1,0 +1,4 @@
+---
+- hosts: db01.baikonur.at
+  roles:
+    - role: service_db-postgres
