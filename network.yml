@@ -1,4 +1,4 @@
 ---
-- hosts: linux
+- hosts: management01.baikonur.at, management02.baikonur.at
   roles:
-    - role: initial_05_network
+    - role: service_dns
