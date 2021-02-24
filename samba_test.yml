@@ -1,4 +1,0 @@
----
-- hosts: foundry01.baikonur.at, control01.baikonur.at, db01.baikonur.at
-  roles:
-    - role: service_samba

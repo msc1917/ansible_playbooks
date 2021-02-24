@@ -1,4 +1,0 @@
----
-- hosts: linux
-  roles:
-    - role: initial_04_baseusers

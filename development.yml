@@ -1,4 +1,0 @@
----
-- hosts: all_development
-  roles:
-    - role: host_02_development
