@@ -1,4 +1,4 @@
 ---
-- hosts: all_mongodb
+- hosts: all_db-mongodb
   roles:
-    - role: service_db-mongo
+    - role: service_db-mongodb
