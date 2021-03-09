@@ -1,4 +1,4 @@
 ---
-- hosts: linux
+- hosts: control01.baikonur.at
   roles:
     - role: setenv_ssl-certificate
