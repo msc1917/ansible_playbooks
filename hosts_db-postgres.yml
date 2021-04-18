@@ -1,4 +1,4 @@
 ---
-- hosts: all_db-postgres
+- hosts: linux
   roles:
     - role: service_db-postgres

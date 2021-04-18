@@ -1,0 +1,8 @@
+---
+- hosts: management02.baikonur.at
+  roles:
+    - role: service_apt-proxy
+
+- hosts: linux
+  roles:
+    - role: setenv_apt-proxy
