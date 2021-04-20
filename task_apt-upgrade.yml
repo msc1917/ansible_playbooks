@@ -1,0 +1,10 @@
+---
+- name: Update and upgrade apt packages
+  hosts: linux
+  tasks:
+  - name: update all linux hosts
+    apt:
+      upgrade: yes
+      update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+      cache_valid_time: "{{ apt_proxy.update_cache | default(86400) }}"
+    become: true
